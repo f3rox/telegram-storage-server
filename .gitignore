@@ -1,0 +1,11 @@
+.idea
+cmake-build-*/
+out/
+.idea_modules/
+*.class
+*.log
+*.metals
+tdlib
+tdlib.log
+target
+project/target
