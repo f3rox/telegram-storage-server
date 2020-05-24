@@ -8,6 +8,7 @@ lazy val root =
       scalaVersion := "2.13.2",
       libraryDependencies ++= Seq(
         Http4s.DSL,
-        Http4s.Server
+        Http4s.Server,
+        PureConfig
       )
     )
