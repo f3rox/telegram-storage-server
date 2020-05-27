@@ -1,6 +1,7 @@
 package by.iodkowski.telegram
 
 import by.iodkowski.config.AppConfig.TdLibParameters
+import by.iodkowski.telegram.api.Update
 import cats.effect.{ConcurrentEffect, Effect, IO, Sync}
 import cats.implicits._
 import fs2.Stream
@@ -9,7 +10,7 @@ import org.drinkless.tdlib.TdApi.SetTdlibParameters
 import org.drinkless.tdlib.{Client, TdApi}
 
 trait TelegramClient[F[_]] {
-  def updates: Stream[F, TdApi.Object]
+  def updates: Stream[F, Update]
   def setTdLibParameters(parameters: TdLibParameters): F[Unit]
 }
 
@@ -17,15 +18,15 @@ object TelegramClient {
 
   def create[F[_]: ConcurrentEffect]: F[TelegramClient[F]] =
     for {
-      q <- Queue.unbounded[F, TdApi.Object]
+      q <- Queue.unbounded[F, Update]
       client <- Sync[F].delay {
         def enqueue(update: TdApi.Object): Unit =
-          Effect[F].runAsync(q.enqueue1(update))(_ => IO.unit).unsafeRunSync()
+          Effect[F].runAsync(q.enqueue1(Update.fromJava(update)))(_ => IO.unit).unsafeRunSync()
         Client.create(enqueue, println, println)
       }
     } yield new TelegramClient[F] {
 
-      override def updates: Stream[F, TdApi.Object] = q.dequeue
+      override def updates: Stream[F, Update] = q.dequeue
 
       override def setTdLibParameters(parameters: TdLibParameters): F[Unit] = Sync[F].delay {
         import parameters._

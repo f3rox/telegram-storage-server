@@ -1137,8 +1137,8 @@ private[api] object UpdatePollAnswer {
   def fromJava(o: TdApi.UpdatePollAnswer): UpdatePollAnswer = UpdatePollAnswer(o.pollId, o.userId, o.optionIds.toList)
 }
 
-private[api] object Update {
-  def fromJava(o: TdApi.Update): Update = o.getConstructor match {
+private[telegram] object Update {
+  def fromJava(o: TdApi.Object): Update = o.getConstructor match {
     case TdApi.UpdateUserStatus.CONSTRUCTOR   => UpdateUserStatus.fromJava(o.asInstanceOf[TdApi.UpdateUserStatus])
     case TdApi.UpdateUser.CONSTRUCTOR         => UpdateUser.fromJava(o.asInstanceOf[TdApi.UpdateUser])
     case TdApi.UpdateChatOrder.CONSTRUCTOR    => UpdateChatOrder.fromJava(o.asInstanceOf[TdApi.UpdateChatOrder])
