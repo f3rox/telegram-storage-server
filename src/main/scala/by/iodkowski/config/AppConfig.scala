@@ -1,11 +1,11 @@
 package by.iodkowski.config
 
-import by.iodkowski.config.AppConfig.{HttpConfig, TdLibParameters}
+import by.iodkowski.config.AppConfig.{HttpConfig, TdLibConfig}
 import cats.effect.Sync
 import pureconfig.generic.semiauto._
 import pureconfig.{ConfigReader, ConfigSource}
 
-final case class AppConfig(http: HttpConfig, tdLib: TdLibParameters)
+final case class AppConfig(http: HttpConfig, tdLib: TdLibConfig)
 
 object AppConfig {
 
@@ -14,7 +14,7 @@ object AppConfig {
     implicit val configReader: ConfigReader[HttpConfig] = deriveReader
   }
 
-  final case class TdLibParameters(
+  final case class TdLibConfig(
     apiId: Int,
     apiHash: String,
     databaseDirectory: String,
@@ -26,8 +26,8 @@ object AppConfig {
     applicationVersion: String,
     enableStorageOptimizer: Boolean
   )
-  object TdLibParameters {
-    implicit val configReader: ConfigReader[TdLibParameters] = deriveReader
+  object TdLibConfig {
+    implicit val configReader: ConfigReader[TdLibConfig] = deriveReader
   }
 
   implicit val configReader: ConfigReader[AppConfig] = deriveReader

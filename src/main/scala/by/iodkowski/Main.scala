@@ -17,8 +17,7 @@ object Main extends IOApp {
       config       <- AppConfig.load
       helloService = HelloService.create
       routes       = ApplicationRoutes.of(helloService)
-      client       <- TelegramClient.create
-      _            <- client.setTdLibParameters(config.tdLib)
+      client       <- TelegramClient.of(config.tdLib)
       _            <- client.updates.evalTap(x => Sync[F].delay(println(x))).compile.drain
       _            <- HttpServer.start(config.http, routes)
     } yield ExitCode.Success

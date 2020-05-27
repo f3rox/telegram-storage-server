@@ -26,8 +26,8 @@ sealed abstract class Update extends Product with Serializable
   */
 final case class UpdateAuthorizationState(authorizationState: AuthorizationState) extends Update
 
-private[api] object UpdateAuthorizationState {
-  def fromJava(o: TdApi.UpdateAuthorizationState): UpdateAuthorizationState =
+object UpdateAuthorizationState {
+  private[api] def fromJava(o: TdApi.UpdateAuthorizationState): UpdateAuthorizationState =
     UpdateAuthorizationState(AuthorizationState.fromJava(o.authorizationState))
 }
 
@@ -38,8 +38,8 @@ private[api] object UpdateAuthorizationState {
   */
 final case class UpdateNewMessage(message: Message) extends Update
 
-private[api] object UpdateNewMessage {
-  def fromJava(o: TdApi.UpdateNewMessage): UpdateNewMessage = UpdateNewMessage(Message.fromJava(o.message))
+object UpdateNewMessage {
+  private[api] def fromJava(o: TdApi.UpdateNewMessage): UpdateNewMessage = UpdateNewMessage(Message.fromJava(o.message))
 }
 
 /**
@@ -50,8 +50,8 @@ private[api] object UpdateNewMessage {
   */
 final case class UpdateMessageSendAcknowledged(chatId: Long, messageId: Long) extends Update
 
-private[api] object UpdateMessageSendAcknowledged {
-  def fromJava(o: TdApi.UpdateMessageSendAcknowledged): UpdateMessageSendAcknowledged =
+object UpdateMessageSendAcknowledged {
+  private[api] def fromJava(o: TdApi.UpdateMessageSendAcknowledged): UpdateMessageSendAcknowledged =
     UpdateMessageSendAcknowledged(o.chatId, o.messageId)
 }
 
@@ -63,8 +63,8 @@ private[api] object UpdateMessageSendAcknowledged {
   */
 final case class UpdateMessageSendSucceeded(message: Message, oldMessageId: Long) extends Update
 
-private[api] object UpdateMessageSendSucceeded {
-  def fromJava(o: TdApi.UpdateMessageSendSucceeded): UpdateMessageSendSucceeded =
+object UpdateMessageSendSucceeded {
+  private[api] def fromJava(o: TdApi.UpdateMessageSendSucceeded): UpdateMessageSendSucceeded =
     UpdateMessageSendSucceeded(Message.fromJava(o.message), o.oldMessageId)
 }
 
@@ -79,8 +79,8 @@ private[api] object UpdateMessageSendSucceeded {
 final case class UpdateMessageSendFailed(message: Message, oldMessageId: Long, errorCode: Int, errorMessage: String)
     extends Update
 
-private[api] object UpdateMessageSendFailed {
-  def fromJava(o: TdApi.UpdateMessageSendFailed): UpdateMessageSendFailed =
+object UpdateMessageSendFailed {
+  private[api] def fromJava(o: TdApi.UpdateMessageSendFailed): UpdateMessageSendFailed =
     UpdateMessageSendFailed(Message.fromJava(o.message), o.oldMessageId, o.errorCode, o.errorMessage)
 }
 
@@ -93,8 +93,8 @@ private[api] object UpdateMessageSendFailed {
   */
 final case class UpdateMessageContent(chatId: Long, messageId: Long, newContent: MessageContent) extends Update
 
-private[api] object UpdateMessageContent {
-  def fromJava(o: TdApi.UpdateMessageContent): UpdateMessageContent =
+object UpdateMessageContent {
+  private[api] def fromJava(o: TdApi.UpdateMessageContent): UpdateMessageContent =
     UpdateMessageContent(o.chatId, o.messageId, MessageContent.fromJava(o.newContent))
 }
 
@@ -109,8 +109,8 @@ private[api] object UpdateMessageContent {
 final case class UpdateMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: Option[ReplyMarkup])
     extends Update
 
-private[api] object UpdateMessageEdited {
-  def fromJava(o: TdApi.UpdateMessageEdited): UpdateMessageEdited =
+object UpdateMessageEdited {
+  private[api] def fromJava(o: TdApi.UpdateMessageEdited): UpdateMessageEdited =
     UpdateMessageEdited(o.chatId, o.messageId, o.editDate, Option(o.replyMarkup).map(ReplyMarkup.fromJava))
 }
 
@@ -123,8 +123,9 @@ private[api] object UpdateMessageEdited {
   */
 final case class UpdateMessageViews(chatId: Long, messageId: Long, views: Int) extends Update
 
-private[api] object UpdateMessageViews {
-  def fromJava(o: TdApi.UpdateMessageViews): UpdateMessageViews = UpdateMessageViews(o.chatId, o.messageId, o.views)
+object UpdateMessageViews {
+  private[api] def fromJava(o: TdApi.UpdateMessageViews): UpdateMessageViews =
+    UpdateMessageViews(o.chatId, o.messageId, o.views)
 }
 
 /**
@@ -135,8 +136,8 @@ private[api] object UpdateMessageViews {
   */
 final case class UpdateMessageContentOpened(chatId: Long, messageId: Long) extends Update
 
-private[api] object UpdateMessageContentOpened {
-  def fromJava(o: TdApi.UpdateMessageContentOpened): UpdateMessageContentOpened =
+object UpdateMessageContentOpened {
+  private[api] def fromJava(o: TdApi.UpdateMessageContentOpened): UpdateMessageContentOpened =
     UpdateMessageContentOpened(o.chatId, o.messageId)
 }
 
@@ -149,8 +150,8 @@ private[api] object UpdateMessageContentOpened {
   */
 final case class UpdateMessageMentionRead(chatId: Long, messageId: Long, unreadMentionCount: Int) extends Update
 
-private[api] object UpdateMessageMentionRead {
-  def fromJava(o: TdApi.UpdateMessageMentionRead): UpdateMessageMentionRead =
+object UpdateMessageMentionRead {
+  private[api] def fromJava(o: TdApi.UpdateMessageMentionRead): UpdateMessageMentionRead =
     UpdateMessageMentionRead(o.chatId, o.messageId, o.unreadMentionCount)
 }
 
@@ -162,8 +163,8 @@ private[api] object UpdateMessageMentionRead {
   */
 final case class UpdateMessageLiveLocationViewed(chatId: Long, messageId: Long) extends Update
 
-private[api] object UpdateMessageLiveLocationViewed {
-  def fromJava(o: TdApi.UpdateMessageLiveLocationViewed): UpdateMessageLiveLocationViewed =
+object UpdateMessageLiveLocationViewed {
+  private[api] def fromJava(o: TdApi.UpdateMessageLiveLocationViewed): UpdateMessageLiveLocationViewed =
     UpdateMessageLiveLocationViewed(o.chatId, o.messageId)
 }
 
@@ -174,8 +175,8 @@ private[api] object UpdateMessageLiveLocationViewed {
   */
 final case class UpdateNewChat(chat: Chat) extends Update
 
-private[api] object UpdateNewChat {
-  def fromJava(o: TdApi.UpdateNewChat): UpdateNewChat = UpdateNewChat(Chat.fromJava(o.chat))
+object UpdateNewChat {
+  private[api] def fromJava(o: TdApi.UpdateNewChat): UpdateNewChat = UpdateNewChat(Chat.fromJava(o.chat))
 }
 
 /**
@@ -186,8 +187,8 @@ private[api] object UpdateNewChat {
   */
 final case class UpdateChatChatList(chatId: Long, chatList: Option[ChatList]) extends Update
 
-private[api] object UpdateChatChatList {
-  def fromJava(o: TdApi.UpdateChatChatList): UpdateChatChatList =
+object UpdateChatChatList {
+  private[api] def fromJava(o: TdApi.UpdateChatChatList): UpdateChatChatList =
     UpdateChatChatList(o.chatId, Option(o.chatList).map(ChatList.fromJava))
 }
 
@@ -199,8 +200,8 @@ private[api] object UpdateChatChatList {
   */
 final case class UpdateChatTitle(chatId: Long, title: String) extends Update
 
-private[api] object UpdateChatTitle {
-  def fromJava(o: TdApi.UpdateChatTitle): UpdateChatTitle = UpdateChatTitle(o.chatId, o.title)
+object UpdateChatTitle {
+  private[api] def fromJava(o: TdApi.UpdateChatTitle): UpdateChatTitle = UpdateChatTitle(o.chatId, o.title)
 }
 
 /**
@@ -211,8 +212,8 @@ private[api] object UpdateChatTitle {
   */
 final case class UpdateChatPhoto(chatId: Long, photo: Option[ChatPhoto]) extends Update
 
-private[api] object UpdateChatPhoto {
-  def fromJava(o: TdApi.UpdateChatPhoto): UpdateChatPhoto =
+object UpdateChatPhoto {
+  private[api] def fromJava(o: TdApi.UpdateChatPhoto): UpdateChatPhoto =
     UpdateChatPhoto(o.chatId, Option(o.photo).map(ChatPhoto.fromJava))
 }
 
@@ -224,8 +225,8 @@ private[api] object UpdateChatPhoto {
   */
 final case class UpdateChatPermissions(chatId: Long, permissions: ChatPermissions) extends Update
 
-private[api] object UpdateChatPermissions {
-  def fromJava(o: TdApi.UpdateChatPermissions): UpdateChatPermissions =
+object UpdateChatPermissions {
+  private[api] def fromJava(o: TdApi.UpdateChatPermissions): UpdateChatPermissions =
     UpdateChatPermissions(o.chatId, ChatPermissions.fromJava(o.permissions))
 }
 
@@ -238,8 +239,8 @@ private[api] object UpdateChatPermissions {
   */
 final case class UpdateChatLastMessage(chatId: Long, lastMessage: Option[Message], order: Long) extends Update
 
-private[api] object UpdateChatLastMessage {
-  def fromJava(o: TdApi.UpdateChatLastMessage): UpdateChatLastMessage =
+object UpdateChatLastMessage {
+  private[api] def fromJava(o: TdApi.UpdateChatLastMessage): UpdateChatLastMessage =
     UpdateChatLastMessage(o.chatId, Option(o.lastMessage).map(Message.fromJava), o.order)
 }
 
@@ -251,8 +252,8 @@ private[api] object UpdateChatLastMessage {
   */
 final case class UpdateChatOrder(chatId: Long, order: Long) extends Update
 
-private[api] object UpdateChatOrder {
-  def fromJava(o: TdApi.UpdateChatOrder): UpdateChatOrder = UpdateChatOrder(o.chatId, o.order)
+object UpdateChatOrder {
+  private[api] def fromJava(o: TdApi.UpdateChatOrder): UpdateChatOrder = UpdateChatOrder(o.chatId, o.order)
 }
 
 /**
@@ -264,8 +265,9 @@ private[api] object UpdateChatOrder {
   */
 final case class UpdateChatIsPinned(chatId: Long, isPinned: Boolean, order: Long) extends Update
 
-private[api] object UpdateChatIsPinned {
-  def fromJava(o: TdApi.UpdateChatIsPinned): UpdateChatIsPinned = UpdateChatIsPinned(o.chatId, o.isPinned, o.order)
+object UpdateChatIsPinned {
+  private[api] def fromJava(o: TdApi.UpdateChatIsPinned): UpdateChatIsPinned =
+    UpdateChatIsPinned(o.chatId, o.isPinned, o.order)
 }
 
 /**
@@ -276,8 +278,8 @@ private[api] object UpdateChatIsPinned {
   */
 final case class UpdateChatIsMarkedAsUnread(chatId: Long, isMarkedAsUnread: Boolean) extends Update
 
-private[api] object UpdateChatIsMarkedAsUnread {
-  def fromJava(o: TdApi.UpdateChatIsMarkedAsUnread): UpdateChatIsMarkedAsUnread =
+object UpdateChatIsMarkedAsUnread {
+  private[api] def fromJava(o: TdApi.UpdateChatIsMarkedAsUnread): UpdateChatIsMarkedAsUnread =
     UpdateChatIsMarkedAsUnread(o.chatId, o.isMarkedAsUnread)
 }
 
@@ -290,8 +292,8 @@ private[api] object UpdateChatIsMarkedAsUnread {
   */
 final case class UpdateChatIsSponsored(chatId: Long, isSponsored: Boolean, order: Long) extends Update
 
-private[api] object UpdateChatIsSponsored {
-  def fromJava(o: TdApi.UpdateChatIsSponsored): UpdateChatIsSponsored =
+object UpdateChatIsSponsored {
+  private[api] def fromJava(o: TdApi.UpdateChatIsSponsored): UpdateChatIsSponsored =
     UpdateChatIsSponsored(o.chatId, o.isSponsored, o.order)
 }
 
@@ -303,8 +305,8 @@ private[api] object UpdateChatIsSponsored {
   */
 final case class UpdateChatHasScheduledMessages(chatId: Long, hasScheduledMessages: Boolean) extends Update
 
-private[api] object UpdateChatHasScheduledMessages {
-  def fromJava(o: TdApi.UpdateChatHasScheduledMessages): UpdateChatHasScheduledMessages =
+object UpdateChatHasScheduledMessages {
+  private[api] def fromJava(o: TdApi.UpdateChatHasScheduledMessages): UpdateChatHasScheduledMessages =
     UpdateChatHasScheduledMessages(o.chatId, o.hasScheduledMessages)
 }
 
@@ -316,8 +318,8 @@ private[api] object UpdateChatHasScheduledMessages {
   */
 final case class UpdateChatDefaultDisableNotification(chatId: Long, defaultDisableNotification: Boolean) extends Update
 
-private[api] object UpdateChatDefaultDisableNotification {
-  def fromJava(o: TdApi.UpdateChatDefaultDisableNotification): UpdateChatDefaultDisableNotification =
+object UpdateChatDefaultDisableNotification {
+  private[api] def fromJava(o: TdApi.UpdateChatDefaultDisableNotification): UpdateChatDefaultDisableNotification =
     UpdateChatDefaultDisableNotification(o.chatId, o.defaultDisableNotification)
 }
 
@@ -330,8 +332,8 @@ private[api] object UpdateChatDefaultDisableNotification {
   */
 final case class UpdateChatReadInbox(chatId: Long, lastReadInboxMessageId: Long, unreadCount: Int) extends Update
 
-private[api] object UpdateChatReadInbox {
-  def fromJava(o: TdApi.UpdateChatReadInbox): UpdateChatReadInbox =
+object UpdateChatReadInbox {
+  private[api] def fromJava(o: TdApi.UpdateChatReadInbox): UpdateChatReadInbox =
     UpdateChatReadInbox(o.chatId, o.lastReadInboxMessageId, o.unreadCount)
 }
 
@@ -343,8 +345,8 @@ private[api] object UpdateChatReadInbox {
   */
 final case class UpdateChatReadOutbox(chatId: Long, lastReadOutboxMessageId: Long) extends Update
 
-private[api] object UpdateChatReadOutbox {
-  def fromJava(o: TdApi.UpdateChatReadOutbox): UpdateChatReadOutbox =
+object UpdateChatReadOutbox {
+  private[api] def fromJava(o: TdApi.UpdateChatReadOutbox): UpdateChatReadOutbox =
     UpdateChatReadOutbox(o.chatId, o.lastReadOutboxMessageId)
 }
 
@@ -356,8 +358,8 @@ private[api] object UpdateChatReadOutbox {
   */
 final case class UpdateChatUnreadMentionCount(chatId: Long, unreadMentionCount: Int) extends Update
 
-private[api] object UpdateChatUnreadMentionCount {
-  def fromJava(o: TdApi.UpdateChatUnreadMentionCount): UpdateChatUnreadMentionCount =
+object UpdateChatUnreadMentionCount {
+  private[api] def fromJava(o: TdApi.UpdateChatUnreadMentionCount): UpdateChatUnreadMentionCount =
     UpdateChatUnreadMentionCount(o.chatId, o.unreadMentionCount)
 }
 
@@ -370,8 +372,8 @@ private[api] object UpdateChatUnreadMentionCount {
 final case class UpdateChatNotificationSettings(chatId: Long, notificationSettings: ChatNotificationSettings)
     extends Update
 
-private[api] object UpdateChatNotificationSettings {
-  def fromJava(o: TdApi.UpdateChatNotificationSettings): UpdateChatNotificationSettings =
+object UpdateChatNotificationSettings {
+  private[api] def fromJava(o: TdApi.UpdateChatNotificationSettings): UpdateChatNotificationSettings =
     UpdateChatNotificationSettings(o.chatId, ChatNotificationSettings.fromJava(o.notificationSettings))
 }
 
@@ -386,8 +388,8 @@ final case class UpdateScopeNotificationSettings(
   notificationSettings: ScopeNotificationSettings
 ) extends Update
 
-private[api] object UpdateScopeNotificationSettings {
-  def fromJava(o: TdApi.UpdateScopeNotificationSettings): UpdateScopeNotificationSettings =
+object UpdateScopeNotificationSettings {
+  private[api] def fromJava(o: TdApi.UpdateScopeNotificationSettings): UpdateScopeNotificationSettings =
     UpdateScopeNotificationSettings(
       NotificationSettingsScope.fromJava(o.scope),
       ScopeNotificationSettings.fromJava(o.notificationSettings)
@@ -402,8 +404,8 @@ private[api] object UpdateScopeNotificationSettings {
   */
 final case class UpdateChatActionBar(chatId: Long, actionBar: Option[ChatActionBar]) extends Update
 
-private[api] object UpdateChatActionBar {
-  def fromJava(o: TdApi.UpdateChatActionBar): UpdateChatActionBar =
+object UpdateChatActionBar {
+  private[api] def fromJava(o: TdApi.UpdateChatActionBar): UpdateChatActionBar =
     UpdateChatActionBar(o.chatId, Option(o.actionBar).map(ChatActionBar.fromJava))
 }
 
@@ -415,8 +417,8 @@ private[api] object UpdateChatActionBar {
   */
 final case class UpdateChatPinnedMessage(chatId: Long, pinnedMessageId: Long) extends Update
 
-private[api] object UpdateChatPinnedMessage {
-  def fromJava(o: TdApi.UpdateChatPinnedMessage): UpdateChatPinnedMessage =
+object UpdateChatPinnedMessage {
+  private[api] def fromJava(o: TdApi.UpdateChatPinnedMessage): UpdateChatPinnedMessage =
     UpdateChatPinnedMessage(o.chatId, o.pinnedMessageId)
 }
 
@@ -428,8 +430,8 @@ private[api] object UpdateChatPinnedMessage {
   */
 final case class UpdateChatReplyMarkup(chatId: Long, replyMarkupMessageId: Long) extends Update
 
-private[api] object UpdateChatReplyMarkup {
-  def fromJava(o: TdApi.UpdateChatReplyMarkup): UpdateChatReplyMarkup =
+object UpdateChatReplyMarkup {
+  private[api] def fromJava(o: TdApi.UpdateChatReplyMarkup): UpdateChatReplyMarkup =
     UpdateChatReplyMarkup(o.chatId, o.replyMarkupMessageId)
 }
 
@@ -442,8 +444,8 @@ private[api] object UpdateChatReplyMarkup {
   */
 final case class UpdateChatDraftMessage(chatId: Long, draftMessage: Option[DraftMessage], order: Long) extends Update
 
-private[api] object UpdateChatDraftMessage {
-  def fromJava(o: TdApi.UpdateChatDraftMessage): UpdateChatDraftMessage =
+object UpdateChatDraftMessage {
+  private[api] def fromJava(o: TdApi.UpdateChatDraftMessage): UpdateChatDraftMessage =
     UpdateChatDraftMessage(o.chatId, Option(o.draftMessage).map(DraftMessage.fromJava), o.order)
 }
 
@@ -455,8 +457,8 @@ private[api] object UpdateChatDraftMessage {
   */
 final case class UpdateChatOnlineMemberCount(chatId: Long, onlineMemberCount: Int) extends Update
 
-private[api] object UpdateChatOnlineMemberCount {
-  def fromJava(o: TdApi.UpdateChatOnlineMemberCount): UpdateChatOnlineMemberCount =
+object UpdateChatOnlineMemberCount {
+  private[api] def fromJava(o: TdApi.UpdateChatOnlineMemberCount): UpdateChatOnlineMemberCount =
     UpdateChatOnlineMemberCount(o.chatId, o.onlineMemberCount)
 }
 
@@ -468,8 +470,8 @@ private[api] object UpdateChatOnlineMemberCount {
   */
 final case class UpdateNotification(notificationGroupId: Int, notification: Notification) extends Update
 
-private[api] object UpdateNotification {
-  def fromJava(o: TdApi.UpdateNotification): UpdateNotification =
+object UpdateNotification {
+  private[api] def fromJava(o: TdApi.UpdateNotification): UpdateNotification =
     UpdateNotification(o.notificationGroupId, Notification.fromJava(o.notification))
 }
 
@@ -496,8 +498,8 @@ final case class UpdateNotificationGroup(
   removedNotificationIds: List[Int]
 ) extends Update
 
-private[api] object UpdateNotificationGroup {
-  def fromJava(o: TdApi.UpdateNotificationGroup): UpdateNotificationGroup =
+object UpdateNotificationGroup {
+  private[api] def fromJava(o: TdApi.UpdateNotificationGroup): UpdateNotificationGroup =
     UpdateNotificationGroup(
       o.notificationGroupId,
       NotificationGroupType.fromJava(o.`type`),
@@ -517,8 +519,8 @@ private[api] object UpdateNotificationGroup {
   */
 final case class UpdateActiveNotifications(groups: List[NotificationGroup]) extends Update
 
-private[api] object UpdateActiveNotifications {
-  def fromJava(o: TdApi.UpdateActiveNotifications): UpdateActiveNotifications =
+object UpdateActiveNotifications {
+  private[api] def fromJava(o: TdApi.UpdateActiveNotifications): UpdateActiveNotifications =
     UpdateActiveNotifications(o.groups.map(NotificationGroup.fromJava).toList)
 }
 
@@ -531,8 +533,8 @@ private[api] object UpdateActiveNotifications {
 final case class UpdateHavePendingNotifications(haveDelayedNotifications: Boolean, haveUnreceivedNotifications: Boolean)
     extends Update
 
-private[api] object UpdateHavePendingNotifications {
-  def fromJava(o: TdApi.UpdateHavePendingNotifications): UpdateHavePendingNotifications =
+object UpdateHavePendingNotifications {
+  private[api] def fromJava(o: TdApi.UpdateHavePendingNotifications): UpdateHavePendingNotifications =
     UpdateHavePendingNotifications(o.haveDelayedNotifications, o.haveUnreceivedNotifications)
 }
 
@@ -547,8 +549,8 @@ private[api] object UpdateHavePendingNotifications {
 final case class UpdateDeleteMessages(chatId: Long, messageIds: List[Long], isPermanent: Boolean, fromCache: Boolean)
     extends Update
 
-private[api] object UpdateDeleteMessages {
-  def fromJava(o: TdApi.UpdateDeleteMessages): UpdateDeleteMessages =
+object UpdateDeleteMessages {
+  private[api] def fromJava(o: TdApi.UpdateDeleteMessages): UpdateDeleteMessages =
     UpdateDeleteMessages(o.chatId, o.messageIds.toList, o.isPermanent, o.fromCache)
 }
 
@@ -561,8 +563,8 @@ private[api] object UpdateDeleteMessages {
   */
 final case class UpdateUserChatAction(chatId: Long, userId: Int, action: ChatAction) extends Update
 
-private[api] object UpdateUserChatAction {
-  def fromJava(o: TdApi.UpdateUserChatAction): UpdateUserChatAction =
+object UpdateUserChatAction {
+  private[api] def fromJava(o: TdApi.UpdateUserChatAction): UpdateUserChatAction =
     UpdateUserChatAction(o.chatId, o.userId, ChatAction.fromJava(o.action))
 }
 
@@ -574,8 +576,9 @@ private[api] object UpdateUserChatAction {
   */
 final case class UpdateUserStatus(userId: Int, status: UserStatus) extends Update
 
-private[api] object UpdateUserStatus {
-  def fromJava(o: TdApi.UpdateUserStatus): UpdateUserStatus = UpdateUserStatus(o.userId, UserStatus.fromJava(o.status))
+object UpdateUserStatus {
+  private[api] def fromJava(o: TdApi.UpdateUserStatus): UpdateUserStatus =
+    UpdateUserStatus(o.userId, UserStatus.fromJava(o.status))
 }
 
 /**
@@ -585,8 +588,8 @@ private[api] object UpdateUserStatus {
   */
 final case class UpdateUser(user: User) extends Update
 
-private[api] object UpdateUser {
-  def fromJava(o: TdApi.UpdateUser): UpdateUser = UpdateUser(User.fromJava(o.user))
+object UpdateUser {
+  private[api] def fromJava(o: TdApi.UpdateUser): UpdateUser = UpdateUser(User.fromJava(o.user))
 }
 
 /**
@@ -596,8 +599,9 @@ private[api] object UpdateUser {
   */
 final case class UpdateBasicGroup(basicGroup: BasicGroup) extends Update
 
-private[api] object UpdateBasicGroup {
-  def fromJava(o: TdApi.UpdateBasicGroup): UpdateBasicGroup = UpdateBasicGroup(BasicGroup.fromJava(o.basicGroup))
+object UpdateBasicGroup {
+  private[api] def fromJava(o: TdApi.UpdateBasicGroup): UpdateBasicGroup =
+    UpdateBasicGroup(BasicGroup.fromJava(o.basicGroup))
 }
 
 /**
@@ -607,8 +611,9 @@ private[api] object UpdateBasicGroup {
   */
 final case class UpdateSupergroup(supergroup: Supergroup) extends Update
 
-private[api] object UpdateSupergroup {
-  def fromJava(o: TdApi.UpdateSupergroup): UpdateSupergroup = UpdateSupergroup(Supergroup.fromJava(o.supergroup))
+object UpdateSupergroup {
+  private[api] def fromJava(o: TdApi.UpdateSupergroup): UpdateSupergroup =
+    UpdateSupergroup(Supergroup.fromJava(o.supergroup))
 }
 
 /**
@@ -618,8 +623,9 @@ private[api] object UpdateSupergroup {
   */
 final case class UpdateSecretChat(secretChat: SecretChat) extends Update
 
-private[api] object UpdateSecretChat {
-  def fromJava(o: TdApi.UpdateSecretChat): UpdateSecretChat = UpdateSecretChat(SecretChat.fromJava(o.secretChat))
+object UpdateSecretChat {
+  private[api] def fromJava(o: TdApi.UpdateSecretChat): UpdateSecretChat =
+    UpdateSecretChat(SecretChat.fromJava(o.secretChat))
 }
 
 /**
@@ -630,8 +636,8 @@ private[api] object UpdateSecretChat {
   */
 final case class UpdateUserFullInfo(userId: Int, userFullInfo: UserFullInfo) extends Update
 
-private[api] object UpdateUserFullInfo {
-  def fromJava(o: TdApi.UpdateUserFullInfo): UpdateUserFullInfo =
+object UpdateUserFullInfo {
+  private[api] def fromJava(o: TdApi.UpdateUserFullInfo): UpdateUserFullInfo =
     UpdateUserFullInfo(o.userId, UserFullInfo.fromJava(o.userFullInfo))
 }
 
@@ -643,8 +649,8 @@ private[api] object UpdateUserFullInfo {
   */
 final case class UpdateBasicGroupFullInfo(basicGroupId: Int, basicGroupFullInfo: BasicGroupFullInfo) extends Update
 
-private[api] object UpdateBasicGroupFullInfo {
-  def fromJava(o: TdApi.UpdateBasicGroupFullInfo): UpdateBasicGroupFullInfo =
+object UpdateBasicGroupFullInfo {
+  private[api] def fromJava(o: TdApi.UpdateBasicGroupFullInfo): UpdateBasicGroupFullInfo =
     UpdateBasicGroupFullInfo(o.basicGroupId, BasicGroupFullInfo.fromJava(o.basicGroupFullInfo))
 }
 
@@ -656,8 +662,8 @@ private[api] object UpdateBasicGroupFullInfo {
   */
 final case class UpdateSupergroupFullInfo(supergroupId: Int, supergroupFullInfo: SupergroupFullInfo) extends Update
 
-private[api] object UpdateSupergroupFullInfo {
-  def fromJava(o: TdApi.UpdateSupergroupFullInfo): UpdateSupergroupFullInfo =
+object UpdateSupergroupFullInfo {
+  private[api] def fromJava(o: TdApi.UpdateSupergroupFullInfo): UpdateSupergroupFullInfo =
     UpdateSupergroupFullInfo(o.supergroupId, SupergroupFullInfo.fromJava(o.supergroupFullInfo))
 }
 
@@ -669,8 +675,8 @@ private[api] object UpdateSupergroupFullInfo {
   */
 final case class UpdateServiceNotification(`type`: String, content: MessageContent) extends Update
 
-private[api] object UpdateServiceNotification {
-  def fromJava(o: TdApi.UpdateServiceNotification): UpdateServiceNotification =
+object UpdateServiceNotification {
+  private[api] def fromJava(o: TdApi.UpdateServiceNotification): UpdateServiceNotification =
     UpdateServiceNotification(o.`type`, MessageContent.fromJava(o.content))
 }
 
@@ -681,8 +687,8 @@ private[api] object UpdateServiceNotification {
   */
 final case class UpdateFile(file: File) extends Update
 
-private[api] object UpdateFile {
-  def fromJava(o: TdApi.UpdateFile): UpdateFile = UpdateFile(File.fromJava(o.file))
+object UpdateFile {
+  private[api] def fromJava(o: TdApi.UpdateFile): UpdateFile = UpdateFile(File.fromJava(o.file))
 }
 
 /**
@@ -700,8 +706,8 @@ final case class UpdateFileGenerationStart(
   conversion: String
 ) extends Update
 
-private[api] object UpdateFileGenerationStart {
-  def fromJava(o: TdApi.UpdateFileGenerationStart): UpdateFileGenerationStart =
+object UpdateFileGenerationStart {
+  private[api] def fromJava(o: TdApi.UpdateFileGenerationStart): UpdateFileGenerationStart =
     UpdateFileGenerationStart(o.generationId, o.originalPath, o.destinationPath, o.conversion)
 }
 
@@ -712,8 +718,9 @@ private[api] object UpdateFileGenerationStart {
   */
 final case class UpdateFileGenerationStop(generationId: Long) extends Update
 
-private[api] object UpdateFileGenerationStop {
-  def fromJava(o: TdApi.UpdateFileGenerationStop): UpdateFileGenerationStop = UpdateFileGenerationStop(o.generationId)
+object UpdateFileGenerationStop {
+  private[api] def fromJava(o: TdApi.UpdateFileGenerationStop): UpdateFileGenerationStop =
+    UpdateFileGenerationStop(o.generationId)
 }
 
 /**
@@ -723,8 +730,8 @@ private[api] object UpdateFileGenerationStop {
   */
 final case class UpdateCall(call: Call) extends Update
 
-private[api] object UpdateCall {
-  def fromJava(o: TdApi.UpdateCall): UpdateCall = UpdateCall(Call.fromJava(o.call))
+object UpdateCall {
+  private[api] def fromJava(o: TdApi.UpdateCall): UpdateCall = UpdateCall(Call.fromJava(o.call))
 }
 
 /**
@@ -736,8 +743,8 @@ private[api] object UpdateCall {
 final case class UpdateUserPrivacySettingRules(setting: UserPrivacySetting, rules: UserPrivacySettingRules)
     extends Update
 
-private[api] object UpdateUserPrivacySettingRules {
-  def fromJava(o: TdApi.UpdateUserPrivacySettingRules): UpdateUserPrivacySettingRules =
+object UpdateUserPrivacySettingRules {
+  private[api] def fromJava(o: TdApi.UpdateUserPrivacySettingRules): UpdateUserPrivacySettingRules =
     UpdateUserPrivacySettingRules(UserPrivacySetting.fromJava(o.setting), UserPrivacySettingRules.fromJava(o.rules))
 }
 
@@ -750,8 +757,8 @@ private[api] object UpdateUserPrivacySettingRules {
   */
 final case class UpdateUnreadMessageCount(chatList: ChatList, unreadCount: Int, unreadUnmutedCount: Int) extends Update
 
-private[api] object UpdateUnreadMessageCount {
-  def fromJava(o: TdApi.UpdateUnreadMessageCount): UpdateUnreadMessageCount =
+object UpdateUnreadMessageCount {
+  private[api] def fromJava(o: TdApi.UpdateUnreadMessageCount): UpdateUnreadMessageCount =
     UpdateUnreadMessageCount(ChatList.fromJava(o.chatList), o.unreadCount, o.unreadUnmutedCount)
 }
 
@@ -774,8 +781,8 @@ final case class UpdateUnreadChatCount(
   markedAsUnreadUnmutedCount: Int
 ) extends Update
 
-private[api] object UpdateUnreadChatCount {
-  def fromJava(o: TdApi.UpdateUnreadChatCount): UpdateUnreadChatCount =
+object UpdateUnreadChatCount {
+  private[api] def fromJava(o: TdApi.UpdateUnreadChatCount): UpdateUnreadChatCount =
     UpdateUnreadChatCount(
       ChatList.fromJava(o.chatList),
       o.totalCount,
@@ -794,8 +801,8 @@ private[api] object UpdateUnreadChatCount {
   */
 final case class UpdateOption(name: String, value: OptionValue) extends Update
 
-private[api] object UpdateOption {
-  def fromJava(o: TdApi.UpdateOption): UpdateOption = UpdateOption(o.name, OptionValue.fromJava(o.value))
+object UpdateOption {
+  private[api] def fromJava(o: TdApi.UpdateOption): UpdateOption = UpdateOption(o.name, OptionValue.fromJava(o.value))
 }
 
 /**
@@ -806,8 +813,8 @@ private[api] object UpdateOption {
   */
 final case class UpdateInstalledStickerSets(isMasks: Boolean, stickerSetIds: List[Long]) extends Update
 
-private[api] object UpdateInstalledStickerSets {
-  def fromJava(o: TdApi.UpdateInstalledStickerSets): UpdateInstalledStickerSets =
+object UpdateInstalledStickerSets {
+  private[api] def fromJava(o: TdApi.UpdateInstalledStickerSets): UpdateInstalledStickerSets =
     UpdateInstalledStickerSets(o.isMasks, o.stickerSetIds.toList)
 }
 
@@ -818,8 +825,8 @@ private[api] object UpdateInstalledStickerSets {
   */
 final case class UpdateTrendingStickerSets(stickerSets: StickerSets) extends Update
 
-private[api] object UpdateTrendingStickerSets {
-  def fromJava(o: TdApi.UpdateTrendingStickerSets): UpdateTrendingStickerSets =
+object UpdateTrendingStickerSets {
+  private[api] def fromJava(o: TdApi.UpdateTrendingStickerSets): UpdateTrendingStickerSets =
     UpdateTrendingStickerSets(StickerSets.fromJava(o.stickerSets))
 }
 
@@ -831,8 +838,8 @@ private[api] object UpdateTrendingStickerSets {
   */
 final case class UpdateRecentStickers(isAttached: Boolean, stickerIds: List[Int]) extends Update
 
-private[api] object UpdateRecentStickers {
-  def fromJava(o: TdApi.UpdateRecentStickers): UpdateRecentStickers =
+object UpdateRecentStickers {
+  private[api] def fromJava(o: TdApi.UpdateRecentStickers): UpdateRecentStickers =
     UpdateRecentStickers(o.isAttached, o.stickerIds.toList)
 }
 
@@ -843,8 +850,9 @@ private[api] object UpdateRecentStickers {
   */
 final case class UpdateFavoriteStickers(stickerIds: List[Int]) extends Update
 
-private[api] object UpdateFavoriteStickers {
-  def fromJava(o: TdApi.UpdateFavoriteStickers): UpdateFavoriteStickers = UpdateFavoriteStickers(o.stickerIds.toList)
+object UpdateFavoriteStickers {
+  private[api] def fromJava(o: TdApi.UpdateFavoriteStickers): UpdateFavoriteStickers =
+    UpdateFavoriteStickers(o.stickerIds.toList)
 }
 
 /**
@@ -854,8 +862,9 @@ private[api] object UpdateFavoriteStickers {
   */
 final case class UpdateSavedAnimations(animationIds: List[Int]) extends Update
 
-private[api] object UpdateSavedAnimations {
-  def fromJava(o: TdApi.UpdateSavedAnimations): UpdateSavedAnimations = UpdateSavedAnimations(o.animationIds.toList)
+object UpdateSavedAnimations {
+  private[api] def fromJava(o: TdApi.UpdateSavedAnimations): UpdateSavedAnimations =
+    UpdateSavedAnimations(o.animationIds.toList)
 }
 
 /**
@@ -866,8 +875,8 @@ private[api] object UpdateSavedAnimations {
   */
 final case class UpdateSelectedBackground(forDarkTheme: Boolean, background: Option[Background]) extends Update
 
-private[api] object UpdateSelectedBackground {
-  def fromJava(o: TdApi.UpdateSelectedBackground): UpdateSelectedBackground =
+object UpdateSelectedBackground {
+  private[api] def fromJava(o: TdApi.UpdateSelectedBackground): UpdateSelectedBackground =
     UpdateSelectedBackground(o.forDarkTheme, Option(o.background).map(Background.fromJava))
 }
 
@@ -884,8 +893,8 @@ final case class UpdateLanguagePackStrings(
   strings: List[LanguagePackString]
 ) extends Update
 
-private[api] object UpdateLanguagePackStrings {
-  def fromJava(o: TdApi.UpdateLanguagePackStrings): UpdateLanguagePackStrings =
+object UpdateLanguagePackStrings {
+  private[api] def fromJava(o: TdApi.UpdateLanguagePackStrings): UpdateLanguagePackStrings =
     UpdateLanguagePackStrings(o.localizationTarget, o.languagePackId, o.strings.map(LanguagePackString.fromJava).toList)
 }
 
@@ -896,8 +905,8 @@ private[api] object UpdateLanguagePackStrings {
   */
 final case class UpdateConnectionState(state: ConnectionState) extends Update
 
-private[api] object UpdateConnectionState {
-  def fromJava(o: TdApi.UpdateConnectionState): UpdateConnectionState =
+object UpdateConnectionState {
+  private[api] def fromJava(o: TdApi.UpdateConnectionState): UpdateConnectionState =
     UpdateConnectionState(ConnectionState.fromJava(o.state))
 }
 
@@ -909,8 +918,8 @@ private[api] object UpdateConnectionState {
   */
 final case class UpdateTermsOfService(termsOfServiceId: String, termsOfService: TermsOfService) extends Update
 
-private[api] object UpdateTermsOfService {
-  def fromJava(o: TdApi.UpdateTermsOfService): UpdateTermsOfService =
+object UpdateTermsOfService {
+  private[api] def fromJava(o: TdApi.UpdateTermsOfService): UpdateTermsOfService =
     UpdateTermsOfService(o.termsOfServiceId, TermsOfService.fromJava(o.termsOfService))
 }
 
@@ -921,8 +930,8 @@ private[api] object UpdateTermsOfService {
   */
 final case class UpdateUsersNearby(usersNearby: List[ChatNearby]) extends Update
 
-private[api] object UpdateUsersNearby {
-  def fromJava(o: TdApi.UpdateUsersNearby): UpdateUsersNearby =
+object UpdateUsersNearby {
+  private[api] def fromJava(o: TdApi.UpdateUsersNearby): UpdateUsersNearby =
     UpdateUsersNearby(o.usersNearby.map(ChatNearby.fromJava).toList)
 }
 
@@ -943,8 +952,8 @@ final case class UpdateNewInlineQuery(
   offset: String
 ) extends Update
 
-private[api] object UpdateNewInlineQuery {
-  def fromJava(o: TdApi.UpdateNewInlineQuery): UpdateNewInlineQuery =
+object UpdateNewInlineQuery {
+  private[api] def fromJava(o: TdApi.UpdateNewInlineQuery): UpdateNewInlineQuery =
     UpdateNewInlineQuery(o.id, o.senderUserId, Option(o.userLocation).map(Location.fromJava), o.query, o.offset)
 }
 
@@ -965,8 +974,8 @@ final case class UpdateNewChosenInlineResult(
   inlineMessageId: String
 ) extends Update
 
-private[api] object UpdateNewChosenInlineResult {
-  def fromJava(o: TdApi.UpdateNewChosenInlineResult): UpdateNewChosenInlineResult =
+object UpdateNewChosenInlineResult {
+  private[api] def fromJava(o: TdApi.UpdateNewChosenInlineResult): UpdateNewChosenInlineResult =
     UpdateNewChosenInlineResult(
       o.senderUserId,
       Option(o.userLocation).map(Location.fromJava),
@@ -995,8 +1004,8 @@ final case class UpdateNewCallbackQuery(
   payload: CallbackQueryPayload
 ) extends Update
 
-private[api] object UpdateNewCallbackQuery {
-  def fromJava(o: TdApi.UpdateNewCallbackQuery): UpdateNewCallbackQuery =
+object UpdateNewCallbackQuery {
+  private[api] def fromJava(o: TdApi.UpdateNewCallbackQuery): UpdateNewCallbackQuery =
     UpdateNewCallbackQuery(
       o.id,
       o.senderUserId,
@@ -1024,8 +1033,8 @@ final case class UpdateNewInlineCallbackQuery(
   payload: CallbackQueryPayload
 ) extends Update
 
-private[api] object UpdateNewInlineCallbackQuery {
-  def fromJava(o: TdApi.UpdateNewInlineCallbackQuery): UpdateNewInlineCallbackQuery =
+object UpdateNewInlineCallbackQuery {
+  private[api] def fromJava(o: TdApi.UpdateNewInlineCallbackQuery): UpdateNewInlineCallbackQuery =
     UpdateNewInlineCallbackQuery(
       o.id,
       o.senderUserId,
@@ -1050,8 +1059,8 @@ final case class UpdateNewShippingQuery(
   shippingAddress: Address
 ) extends Update
 
-private[api] object UpdateNewShippingQuery {
-  def fromJava(o: TdApi.UpdateNewShippingQuery): UpdateNewShippingQuery =
+object UpdateNewShippingQuery {
+  private[api] def fromJava(o: TdApi.UpdateNewShippingQuery): UpdateNewShippingQuery =
     UpdateNewShippingQuery(o.id, o.senderUserId, o.invoicePayload, Address.fromJava(o.shippingAddress))
 }
 
@@ -1076,8 +1085,8 @@ final case class UpdateNewPreCheckoutQuery(
   orderInfo: Option[OrderInfo]
 ) extends Update
 
-private[api] object UpdateNewPreCheckoutQuery {
-  def fromJava(o: TdApi.UpdateNewPreCheckoutQuery): UpdateNewPreCheckoutQuery =
+object UpdateNewPreCheckoutQuery {
+  private[api] def fromJava(o: TdApi.UpdateNewPreCheckoutQuery): UpdateNewPreCheckoutQuery =
     UpdateNewPreCheckoutQuery(
       o.id,
       o.senderUserId,
@@ -1096,8 +1105,8 @@ private[api] object UpdateNewPreCheckoutQuery {
   */
 final case class UpdateNewCustomEvent(event: String) extends Update
 
-private[api] object UpdateNewCustomEvent {
-  def fromJava(o: TdApi.UpdateNewCustomEvent): UpdateNewCustomEvent = UpdateNewCustomEvent(o.event)
+object UpdateNewCustomEvent {
+  private[api] def fromJava(o: TdApi.UpdateNewCustomEvent): UpdateNewCustomEvent = UpdateNewCustomEvent(o.event)
 }
 
 /**
@@ -1109,8 +1118,9 @@ private[api] object UpdateNewCustomEvent {
   */
 final case class UpdateNewCustomQuery(id: Long, data: String, timeout: Int) extends Update
 
-private[api] object UpdateNewCustomQuery {
-  def fromJava(o: TdApi.UpdateNewCustomQuery): UpdateNewCustomQuery = UpdateNewCustomQuery(o.id, o.data, o.timeout)
+object UpdateNewCustomQuery {
+  private[api] def fromJava(o: TdApi.UpdateNewCustomQuery): UpdateNewCustomQuery =
+    UpdateNewCustomQuery(o.id, o.data, o.timeout)
 }
 
 /**
@@ -1120,8 +1130,8 @@ private[api] object UpdateNewCustomQuery {
   */
 final case class UpdatePoll(poll: Poll) extends Update
 
-private[api] object UpdatePoll {
-  def fromJava(o: TdApi.UpdatePoll): UpdatePoll = UpdatePoll(Poll.fromJava(o.poll))
+object UpdatePoll {
+  private[api] def fromJava(o: TdApi.UpdatePoll): UpdatePoll = UpdatePoll(Poll.fromJava(o.poll))
 }
 
 /**
@@ -1133,12 +1143,13 @@ private[api] object UpdatePoll {
   */
 final case class UpdatePollAnswer(pollId: Long, userId: Int, optionIds: List[Int]) extends Update
 
-private[api] object UpdatePollAnswer {
-  def fromJava(o: TdApi.UpdatePollAnswer): UpdatePollAnswer = UpdatePollAnswer(o.pollId, o.userId, o.optionIds.toList)
+object UpdatePollAnswer {
+  private[api] def fromJava(o: TdApi.UpdatePollAnswer): UpdatePollAnswer =
+    UpdatePollAnswer(o.pollId, o.userId, o.optionIds.toList)
 }
 
-private[telegram] object Update {
-  def fromJava(o: TdApi.Object): Update = o.getConstructor match {
+object Update {
+  private[telegram] def fromJava(o: TdApi.Object): Update = o.getConstructor match {
     case TdApi.UpdateUserStatus.CONSTRUCTOR   => UpdateUserStatus.fromJava(o.asInstanceOf[TdApi.UpdateUserStatus])
     case TdApi.UpdateUser.CONSTRUCTOR         => UpdateUser.fromJava(o.asInstanceOf[TdApi.UpdateUser])
     case TdApi.UpdateChatOrder.CONSTRUCTOR    => UpdateChatOrder.fromJava(o.asInstanceOf[TdApi.UpdateChatOrder])
