@@ -5,7 +5,6 @@ out/
 *.class
 *.log
 *.metals
-tdlib
-tdlib.log
+/tdlib
 target
 project/target
