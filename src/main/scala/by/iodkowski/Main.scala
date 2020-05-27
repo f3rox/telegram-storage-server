@@ -3,17 +3,23 @@ package by.iodkowski
 import by.iodkowski.config.AppConfig
 import by.iodkowski.hello.HelloService
 import by.iodkowski.http.{ApplicationRoutes, HttpServer}
-import cats.effect.{ConcurrentEffect, ExitCode, IO, IOApp, Timer}
+import by.iodkowski.telegram.{TdLib, TelegramClient}
+import cats.effect.{ConcurrentEffect, ContextShift, ExitCode, IO, IOApp, Sync, Timer}
 import cats.implicits._
 
 object Main extends IOApp {
   override def run(args: List[String]): IO[ExitCode] = runF[IO]
 
-  private def runF[F[_]: ConcurrentEffect: Timer]: F[ExitCode] =
+  private def runF[F[_]: ConcurrentEffect: Timer: ContextShift]: F[ExitCode] =
     for {
+      _            <- TdLib.loadLibrary
+      _            <- TdLib.setLogVerbosityLevel(2)
       config       <- AppConfig.load
-      helloService = HelloService.make
+      helloService = HelloService.create
       routes       = ApplicationRoutes.of(helloService)
+      client       <- TelegramClient.create
+      _            <- client.setTdLibParameters(config.tdLib)
+      _            <- client.updates.evalTap(x => Sync[F].delay(println(x))).compile.drain
       _            <- HttpServer.start(config.http, routes)
     } yield ExitCode.Success
 }

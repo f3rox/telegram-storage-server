@@ -1,5 +1,5 @@
-import sbt._
 import Dependencies._
+import sbt._
 
 lazy val root =
   (project in file("."))
@@ -9,6 +9,7 @@ lazy val root =
       libraryDependencies ++= Seq(
         Http4s.DSL,
         Http4s.Server,
-        PureConfig
+        PureConfig,
+        FS2
       )
     )

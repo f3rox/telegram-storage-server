@@ -6,10 +6,11 @@ import org.http4s.HttpRoutes
 import org.http4s.dsl.Http4sDsl
 
 object HelloRoutes {
-  def of[F[_]: Sync](helloService: HelloService[F]): HttpRoutes[F] =
-    new Http4sDsl[F] {
-      val routes = HttpRoutes.of[F] {
-        case GET -> Root => helloService.hello().flatMap(Ok(_))
-      }
-    }.routes
+  def of[F[_]: Sync](helloService: HelloService[F]): HttpRoutes[F] = {
+    val dsl = new Http4sDsl[F] {}
+    import dsl._
+    HttpRoutes.of[F] {
+      case GET -> Root => helloService.hello().flatMap(Ok(_))
+    }
+  }
 }

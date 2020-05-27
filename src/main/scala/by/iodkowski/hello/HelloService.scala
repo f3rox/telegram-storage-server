@@ -7,5 +7,5 @@ trait HelloService[F[_]] {
 }
 
 object HelloService {
-  def make[F[_]: Sync]: HelloService[F] = () => Sync[F].delay("Hello!")
+  def create[F[_]: Sync]: HelloService[F] = () => Sync[F].delay("Hello!")
 }
