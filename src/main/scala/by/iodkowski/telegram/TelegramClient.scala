@@ -55,6 +55,7 @@ object TelegramClient {
         params.enableStorageOptimizer = enableStorageOptimizer
         jClient.send(new SetTdlibParameters(params), println)
       }
+
       override def checkDatabaseEncryptionKey: F[Unit] =
         Sync[F].delay(jClient.send(new CheckDatabaseEncryptionKey(), println))
     }
