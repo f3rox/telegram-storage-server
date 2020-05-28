@@ -10,7 +10,7 @@ import org.http4s.server.Router
 object ApplicationRoutes {
   def of[F[_]: Concurrent](helloService: HelloService[F], telegramService: TelegramService[F]): HttpRoutes[F] =
     Router[F](
-      "/hello"  -> HelloRoutes.of(helloService),
-      "/socket" -> SocketRoutes.of[F](telegramService)
+      "/api/v1/hello"  -> HelloRoutes.of(helloService),
+      "/api/v1/socket" -> SocketRoutes.of[F](telegramService)
     )
 }
