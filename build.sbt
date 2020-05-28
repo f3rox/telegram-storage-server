@@ -6,10 +6,15 @@ lazy val root =
     .settings(
       name := "telegram-storage-server",
       scalaVersion := "2.13.2",
+      scalacOptions += "-Ymacro-annotations",
+      resolvers += Resolver.bintrayRepo("evolutiongaming", "maven"),
       libraryDependencies ++= Seq(
         Http4s.DSL,
         Http4s.Server,
         PureConfig,
-        FS2
+        Fs2,
+        Scache,
+        DerevoMagnolia,
+        CirceParser
       )
     )

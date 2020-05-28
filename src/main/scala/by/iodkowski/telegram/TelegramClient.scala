@@ -2,45 +2,55 @@ package by.iodkowski.telegram
 
 import by.iodkowski.config.AppConfig.TdLibConfig
 import by.iodkowski.telegram.api._
-import by.iodkowski.telegram.api.auth.{AuthorizationStateWaitEncryptionKey, AuthorizationStateWaitTdlibParameters}
-import cats.effect.{ConcurrentEffect, Effect, IO, Sync}
+import by.iodkowski.telegram.api.auth._
+import cats.effect.{ConcurrentEffect, IO}
 import cats.implicits._
 import fs2.concurrent._
 import fs2.{Pipe, Stream}
-import org.drinkless.tdlib.TdApi.{CheckDatabaseEncryptionKey, SetTdlibParameters}
 import org.drinkless.tdlib.{Client, TdApi}
 
 trait TelegramClient[F[_]] {
   def updates: Stream[F, Update]
   def setTdLibParameters(parameters: TdLibConfig): F[Unit]
   def checkDatabaseEncryptionKey: F[Unit]
+  def checkAuthenticationCode(code: String): F[Unit]
+  def setAuthenticationPhoneNumber(
+    phoneNumber: Long,
+    settings: Option[PhoneNumberAuthenticationSettings] = None
+  ): F[Unit]
+  def requestQrCodeAuthentication(otherUserIds: List[Int] = List.empty): F[Unit]
+  def checkAuthenticationPassword(password: String): F[Unit]
+  def logOut: F[Unit]
 }
 
 object TelegramClient {
 
-  def of[F[_]: ConcurrentEffect](tdLibConfig: TdLibConfig): F[TelegramClient[F]] =
+  def of[F[_]](phoneNumber: Long, tdLibConfig: TdLibConfig)(implicit F: ConcurrentEffect[F]): F[TelegramClient[F]] =
     for {
       q <- Queue.unbounded[F, Update]
-      jClient <- Sync[F].delay {
+      jClient <- F.delay {
         def enqueue(update: TdApi.Object): Unit =
-          Effect[F].runAsync(q.enqueue1(Update.fromJava(update)))(_ => IO.unit).unsafeRunSync()
+          F.runAsync(q.enqueue1(Update.fromJava(update)))(_ => IO.unit).unsafeRunSync()
         Client.create(enqueue, println, println)
       }
     } yield new TelegramClient[F] {
 
-      private def updatesPreprocessor: Pipe[F, Update, Update] = _.evalTap {
+      private def updatesPreprocessor: Pipe[F, Update, Update] = _.evalFilterNot {
         case UpdateAuthorizationState(authorizationState) =>
           authorizationState match {
-            case AuthorizationStateWaitTdlibParameters  => setTdLibParameters(tdLibConfig)
-            case _: AuthorizationStateWaitEncryptionKey => checkDatabaseEncryptionKey
-            case _                                      => Sync[F].unit
+            case AuthorizationStateWaitTdlibParameters  => setTdLibParameters(tdLibConfig) as true
+            case _: AuthorizationStateWaitEncryptionKey => checkDatabaseEncryptionKey as true
+            case AuthorizationStateWaitPhoneNumber      => setAuthenticationPhoneNumber(phoneNumber) as true
+            case _                                      => false.pure[F]
           }
-        case _ => Sync[F].unit
+        case _ => false.pure[F]
       }
+
+      private def resultHandler(result: TdApi.Object): Unit = println(result)
 
       override def updates: Stream[F, Update] = q.dequeue.through(updatesPreprocessor)
 
-      override def setTdLibParameters(parameters: TdLibConfig): F[Unit] = Sync[F].delay {
+      override def setTdLibParameters(parameters: TdLibConfig): F[Unit] = F.delay {
         import parameters._
         val params = new TdApi.TdlibParameters()
         params.apiId                  = apiId
@@ -53,10 +63,39 @@ object TelegramClient {
         params.systemVersion          = systemVersion
         params.applicationVersion     = applicationVersion
         params.enableStorageOptimizer = enableStorageOptimizer
-        jClient.send(new SetTdlibParameters(params), println)
+        jClient.send(new TdApi.SetTdlibParameters(params), resultHandler)
       }
 
       override def checkDatabaseEncryptionKey: F[Unit] =
-        Sync[F].delay(jClient.send(new CheckDatabaseEncryptionKey(), println))
+        F.delay(jClient.send(new TdApi.CheckDatabaseEncryptionKey(), resultHandler))
+
+      override def checkAuthenticationCode(code: String): F[Unit] =
+        F.delay(jClient.send(new TdApi.CheckAuthenticationCode(code), resultHandler))
+
+      override def setAuthenticationPhoneNumber(
+        phoneNumber: Long,
+        settings: Option[PhoneNumberAuthenticationSettings]
+      ): F[Unit] =
+        F.delay(
+          jClient
+            .send(
+              new TdApi.SetAuthenticationPhoneNumber(phoneNumber.toString, settings.map(_.toJava).orNull),
+              resultHandler
+            )
+        )
+
+      override def requestQrCodeAuthentication(otherUserIds: List[Int]): F[Unit] =
+        F.delay(
+          jClient
+            .send(
+              new TdApi.RequestQrCodeAuthentication(Option.when(otherUserIds.nonEmpty)(otherUserIds.toArray).orNull),
+              resultHandler
+            )
+        )
+
+      override def checkAuthenticationPassword(password: String): F[Unit] =
+        F.delay(jClient.send(new TdApi.CheckAuthenticationPassword(password), resultHandler))
+
+      override def logOut: F[Unit] = F.delay(jClient.send(new TdApi.LogOut(), resultHandler))
     }
 }
