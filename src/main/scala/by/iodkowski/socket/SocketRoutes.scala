@@ -1,5 +1,6 @@
 package by.iodkowski.socket
 
+import by.iodkowski.http.ApplicationRoutes.V1
 import by.iodkowski.telegram.TelegramService
 import cats.effect.Concurrent
 import cats.implicits._
@@ -12,7 +13,7 @@ object SocketRoutes {
     val dsl = new Http4sDsl[F] {}
     import dsl._
     HttpRoutes.of[F] {
-      case GET -> Root / LongVar(phoneNumber) =>
+      case GET -> Root / V1 / "socket" / LongVar(phoneNumber) =>
         for {
           telegramClient <- telegramService.client(phoneNumber)
           socketService  <- SocketService.of(telegramClient)
