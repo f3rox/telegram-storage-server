@@ -3,9 +3,8 @@ package by.iodkowski.socket
 import by.iodkowski.socket.SocketProtocol.ClientMessage._
 import by.iodkowski.socket.SocketProtocol.ServerMessage._
 import by.iodkowski.socket.SocketProtocol.{ClientMessage, ServerMessage}
-import by.iodkowski.telegram.TelegramClient
-import by.iodkowski.telegram.api.UpdateAuthorizationState
 import by.iodkowski.telegram.api.auth._
+import by.iodkowski.telegram.api.{Client, UpdateAuthorizationState}
 import by.iodkowski.utils.http4s._
 import cats.effect.Concurrent
 import cats.implicits._
@@ -22,7 +21,7 @@ trait SocketService[F[_]] {
 
 object SocketService {
 
-  def of[F[_]: Concurrent](telegram: TelegramClient[F]): F[SocketService[F]] =
+  def of[F[_]: Concurrent](telegram: Client[F]): F[SocketService[F]] =
     Queue.unbounded[F, ServerMessage].map { serverResponses =>
       new SocketService[F] {
 

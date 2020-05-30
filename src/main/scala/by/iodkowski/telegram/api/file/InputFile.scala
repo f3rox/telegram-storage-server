@@ -5,17 +5,21 @@ import org.drinkless.tdlib.TdApi
 /**
   * Points to a file.
   */
-sealed abstract class InputFile extends Product with Serializable
+sealed abstract class InputFile extends Product with Serializable {
+  private[api] def toJava: TdApi.InputFile
+}
 
 /**
   * A file defined by its unique ID.
   *
   * @param id Unique file identifier.
   */
-final case class InputFileId(id: Int) extends InputFile
+final case class InputFileId(id: Int) extends InputFile {
+  override private[api] def toJava: TdApi.InputFile = new TdApi.InputFileId(id)
+}
 
-private[api] object InputFileId {
-  def fromJava(o: TdApi.InputFileId): InputFileId = InputFileId(o.id)
+object InputFileId {
+  private[api] def fromJava(o: TdApi.InputFileId): InputFileId = InputFileId(o.id)
 }
 
 /**
@@ -23,10 +27,12 @@ private[api] object InputFileId {
   *
   * @param id Remote file identifier.
   */
-final case class InputFileRemote(id: String) extends InputFile
+final case class InputFileRemote(id: String) extends InputFile {
+  override private[api] def toJava: TdApi.InputFile = new TdApi.InputFileRemote(id)
+}
 
-private[api] object InputFileRemote {
-  def fromJava(o: TdApi.InputFileRemote): InputFileRemote = InputFileRemote(o.id)
+object InputFileRemote {
+  private[api] def fromJava(o: TdApi.InputFileRemote): InputFileRemote = InputFileRemote(o.id)
 }
 
 /**
@@ -34,10 +40,12 @@ private[api] object InputFileRemote {
   *
   * @param path Local path to the file.
   */
-final case class InputFileLocal(path: String) extends InputFile
+final case class InputFileLocal(path: String) extends InputFile {
+  override private[api] def toJava: TdApi.InputFile = new TdApi.InputFileLocal(path)
+}
 
-private[api] object InputFileLocal {
-  def fromJava(o: TdApi.InputFileLocal): InputFileLocal = InputFileLocal(o.path)
+object InputFileLocal {
+  private[api] def fromJava(o: TdApi.InputFileLocal): InputFileLocal = InputFileLocal(o.path)
 }
 
 /**
@@ -47,15 +55,18 @@ private[api] object InputFileLocal {
   * @param conversion   String specifying the conversion applied to the original file; should be persistent across application restarts. Conversions beginning with '#' are reserved for internal TDLib usage.
   * @param expectedSize Expected size of the generated file; 0 if unknown.
   */
-final case class InputFileGenerated(originalPath: String, conversion: String, expectedSize: Int) extends InputFile
+final case class InputFileGenerated(originalPath: String, conversion: String, expectedSize: Int) extends InputFile {
+  override private[api] def toJava: TdApi.InputFile =
+    new TdApi.InputFileGenerated(originalPath, conversion, expectedSize)
+}
 
-private[api] object InputFileGenerated {
-  def fromJava(o: TdApi.InputFileGenerated): InputFileGenerated =
+object InputFileGenerated {
+  private[api] def fromJava(o: TdApi.InputFileGenerated): InputFileGenerated =
     InputFileGenerated(o.originalPath, o.conversion, o.expectedSize)
 }
 
-private[api] object InputFile {
-  def fromJava(o: TdApi.InputFile): InputFile = o.getConstructor match {
+object InputFile {
+  private[api] def fromJava(o: TdApi.InputFile): InputFile = o.getConstructor match {
     case TdApi.InputFileId.CONSTRUCTOR        => InputFileId.fromJava(o.asInstanceOf[TdApi.InputFileId])
     case TdApi.InputFileRemote.CONSTRUCTOR    => InputFileRemote.fromJava(o.asInstanceOf[TdApi.InputFileRemote])
     case TdApi.InputFileLocal.CONSTRUCTOR     => InputFileLocal.fromJava(o.asInstanceOf[TdApi.InputFileLocal])

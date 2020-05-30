@@ -22,8 +22,8 @@ sealed abstract class MessageContent extends Product with Serializable
   */
 final case class MessageText(text: FormattedText, webPage: Option[WebPage]) extends MessageContent
 
-private[api] object MessageText {
-  def fromJava(o: TdApi.MessageText): MessageText =
+object MessageText {
+  private[api] def fromJava(o: TdApi.MessageText): MessageText =
     MessageText(FormattedText.fromJava(o.text), Option(o.webPage).map(WebPage.fromJava))
 }
 
@@ -37,8 +37,8 @@ private[api] object MessageText {
 final case class MessageAnimation(animation: Animation, caption: FormattedText, isSecret: Boolean)
     extends MessageContent
 
-private[api] object MessageAnimation {
-  def fromJava(o: TdApi.MessageAnimation): MessageAnimation =
+object MessageAnimation {
+  private[api] def fromJava(o: TdApi.MessageAnimation): MessageAnimation =
     MessageAnimation(Animation.fromJava(o.animation), FormattedText.fromJava(o.caption), o.isSecret)
 }
 
@@ -50,8 +50,8 @@ private[api] object MessageAnimation {
   */
 final case class MessageAudio(audio: Audio, caption: FormattedText) extends MessageContent
 
-private[api] object MessageAudio {
-  def fromJava(o: TdApi.MessageAudio): MessageAudio =
+object MessageAudio {
+  private[api] def fromJava(o: TdApi.MessageAudio): MessageAudio =
     MessageAudio(Audio.fromJava(o.audio), FormattedText.fromJava(o.caption))
 }
 
@@ -63,8 +63,8 @@ private[api] object MessageAudio {
   */
 final case class MessageDocument(document: Document, caption: FormattedText) extends MessageContent
 
-private[api] object MessageDocument {
-  def fromJava(o: TdApi.MessageDocument): MessageDocument =
+object MessageDocument {
+  private[api] def fromJava(o: TdApi.MessageDocument): MessageDocument =
     MessageDocument(Document.fromJava(o.document), FormattedText.fromJava(o.caption))
 }
 
@@ -77,8 +77,8 @@ private[api] object MessageDocument {
   */
 final case class MessagePhoto(photo: Photo, caption: FormattedText, isSecret: Boolean) extends MessageContent
 
-private[api] object MessagePhoto {
-  def fromJava(o: TdApi.MessagePhoto): MessagePhoto =
+object MessagePhoto {
+  private[api] def fromJava(o: TdApi.MessagePhoto): MessagePhoto =
     MessagePhoto(Photo.fromJava(o.photo), FormattedText.fromJava(o.caption), o.isSecret)
 }
 
@@ -94,8 +94,8 @@ case object MessageExpiredPhoto extends MessageContent
   */
 final case class MessageSticker(sticker: Sticker) extends MessageContent
 
-private[api] object MessageSticker {
-  def fromJava(o: TdApi.MessageSticker): MessageSticker = MessageSticker(Sticker.fromJava(o.sticker))
+object MessageSticker {
+  private[api] def fromJava(o: TdApi.MessageSticker): MessageSticker = MessageSticker(Sticker.fromJava(o.sticker))
 }
 
 /**
@@ -107,8 +107,8 @@ private[api] object MessageSticker {
   */
 final case class MessageVideo(video: Video, caption: FormattedText, isSecret: Boolean) extends MessageContent
 
-private[api] object MessageVideo {
-  def fromJava(o: TdApi.MessageVideo): MessageVideo =
+object MessageVideo {
+  private[api] def fromJava(o: TdApi.MessageVideo): MessageVideo =
     MessageVideo(Video.fromJava(o.video), FormattedText.fromJava(o.caption), o.isSecret)
 }
 
@@ -126,8 +126,8 @@ case object MessageExpiredVideo extends MessageContent
   */
 final case class MessageVideoNote(videoNote: VideoNote, isViewed: Boolean, isSecret: Boolean) extends MessageContent
 
-private[api] object MessageVideoNote {
-  def fromJava(o: TdApi.MessageVideoNote): MessageVideoNote =
+object MessageVideoNote {
+  private[api] def fromJava(o: TdApi.MessageVideoNote): MessageVideoNote =
     MessageVideoNote(VideoNote.fromJava(o.videoNote), o.isViewed, o.isSecret)
 }
 
@@ -141,8 +141,8 @@ private[api] object MessageVideoNote {
 final case class MessageVoiceNote(voiceNote: VoiceNote, caption: FormattedText, isListened: Boolean)
     extends MessageContent
 
-private[api] object MessageVoiceNote {
-  def fromJava(o: TdApi.MessageVoiceNote): MessageVoiceNote =
+object MessageVoiceNote {
+  private[api] def fromJava(o: TdApi.MessageVoiceNote): MessageVoiceNote =
     MessageVoiceNote(VoiceNote.fromJava(o.voiceNote), FormattedText.fromJava(o.caption), o.isListened)
 }
 
@@ -155,8 +155,8 @@ private[api] object MessageVoiceNote {
   */
 final case class MessageLocation(location: Location, livePeriod: Int, expiresIn: Int) extends MessageContent
 
-private[api] object MessageLocation {
-  def fromJava(o: TdApi.MessageLocation): MessageLocation =
+object MessageLocation {
+  private[api] def fromJava(o: TdApi.MessageLocation): MessageLocation =
     MessageLocation(Location.fromJava(o.location), o.livePeriod, o.expiresIn)
 }
 
@@ -167,8 +167,8 @@ private[api] object MessageLocation {
   */
 final case class MessageVenue(venue: Venue) extends MessageContent
 
-private[api] object MessageVenue {
-  def fromJava(o: TdApi.MessageVenue): MessageVenue = MessageVenue(Venue.fromJava(o.venue))
+object MessageVenue {
+  private[api] def fromJava(o: TdApi.MessageVenue): MessageVenue = MessageVenue(Venue.fromJava(o.venue))
 }
 
 /**
@@ -178,8 +178,8 @@ private[api] object MessageVenue {
   */
 final case class MessageContact(contact: Contact) extends MessageContent
 
-private[api] object MessageContact {
-  def fromJava(o: TdApi.MessageContact): MessageContact = MessageContact(Contact.fromJava(o.contact))
+object MessageContact {
+  private[api] def fromJava(o: TdApi.MessageContact): MessageContact = MessageContact(Contact.fromJava(o.contact))
 }
 
 /**
@@ -189,8 +189,8 @@ private[api] object MessageContact {
   */
 final case class MessageGame(game: Game) extends MessageContent
 
-private[api] object MessageGame {
-  def fromJava(o: TdApi.MessageGame): MessageGame = MessageGame(Game.fromJava(o.game))
+object MessageGame {
+  private[api] def fromJava(o: TdApi.MessageGame): MessageGame = MessageGame(Game.fromJava(o.game))
 }
 
 /**
@@ -200,8 +200,8 @@ private[api] object MessageGame {
   */
 final case class MessagePoll(poll: Poll) extends MessageContent
 
-private[api] object MessagePoll {
-  def fromJava(o: TdApi.MessagePoll): MessagePoll = MessagePoll(Poll.fromJava(o.poll))
+object MessagePoll {
+  private[api] def fromJava(o: TdApi.MessagePoll): MessagePoll = MessagePoll(Poll.fromJava(o.poll))
 }
 
 /**
@@ -229,8 +229,8 @@ final case class MessageInvoice(
   receiptMessageId: Long
 ) extends MessageContent
 
-private[api] object MessageInvoice {
-  def fromJava(o: TdApi.MessageInvoice): MessageInvoice =
+object MessageInvoice {
+  private[api] def fromJava(o: TdApi.MessageInvoice): MessageInvoice =
     MessageInvoice(
       o.title,
       o.description,
@@ -252,8 +252,9 @@ private[api] object MessageInvoice {
   */
 final case class MessageCall(discardReason: CallDiscardReason, duration: Int) extends MessageContent
 
-private[api] object MessageCall {
-  def fromJava(o: TdApi.MessageCall): MessageCall = MessageCall(CallDiscardReason.fromJava(o.discardReason), o.duration)
+object MessageCall {
+  private[api] def fromJava(o: TdApi.MessageCall): MessageCall =
+    MessageCall(CallDiscardReason.fromJava(o.discardReason), o.duration)
 }
 
 /**
@@ -264,8 +265,8 @@ private[api] object MessageCall {
   */
 final case class MessageBasicGroupChatCreate(title: String, memberUserIds: List[Int]) extends MessageContent
 
-private[api] object MessageBasicGroupChatCreate {
-  def fromJava(o: TdApi.MessageBasicGroupChatCreate): MessageBasicGroupChatCreate =
+object MessageBasicGroupChatCreate {
+  private[api] def fromJava(o: TdApi.MessageBasicGroupChatCreate): MessageBasicGroupChatCreate =
     MessageBasicGroupChatCreate(o.title, o.memberUserIds.toList)
 }
 
@@ -276,8 +277,9 @@ private[api] object MessageBasicGroupChatCreate {
   */
 final case class MessageSupergroupChatCreate(title: String) extends MessageContent
 
-private[api] object MessageSupergroupChatCreate {
-  def fromJava(o: TdApi.MessageSupergroupChatCreate): MessageSupergroupChatCreate = MessageSupergroupChatCreate(o.title)
+object MessageSupergroupChatCreate {
+  private[api] def fromJava(o: TdApi.MessageSupergroupChatCreate): MessageSupergroupChatCreate =
+    MessageSupergroupChatCreate(o.title)
 }
 
 /**
@@ -287,8 +289,8 @@ private[api] object MessageSupergroupChatCreate {
   */
 final case class MessageChatChangeTitle(title: String) extends MessageContent
 
-private[api] object MessageChatChangeTitle {
-  def fromJava(o: TdApi.MessageChatChangeTitle): MessageChatChangeTitle = MessageChatChangeTitle(o.title)
+object MessageChatChangeTitle {
+  private[api] def fromJava(o: TdApi.MessageChatChangeTitle): MessageChatChangeTitle = MessageChatChangeTitle(o.title)
 }
 
 /**
@@ -298,8 +300,8 @@ private[api] object MessageChatChangeTitle {
   */
 final case class MessageChatChangePhoto(photo: Photo) extends MessageContent
 
-private[api] object MessageChatChangePhoto {
-  def fromJava(o: TdApi.MessageChatChangePhoto): MessageChatChangePhoto =
+object MessageChatChangePhoto {
+  private[api] def fromJava(o: TdApi.MessageChatChangePhoto): MessageChatChangePhoto =
     MessageChatChangePhoto(Photo.fromJava(o.photo))
 }
 
@@ -315,8 +317,9 @@ case object MessageChatDeletePhoto extends MessageContent
   */
 final case class MessageChatAddMembers(memberUserIds: List[Int]) extends MessageContent
 
-private[api] object MessageChatAddMembers {
-  def fromJava(o: TdApi.MessageChatAddMembers): MessageChatAddMembers = MessageChatAddMembers(o.memberUserIds.toList)
+object MessageChatAddMembers {
+  private[api] def fromJava(o: TdApi.MessageChatAddMembers): MessageChatAddMembers =
+    MessageChatAddMembers(o.memberUserIds.toList)
 }
 
 /**
@@ -331,8 +334,9 @@ case object MessageChatJoinByLink extends MessageContent
   */
 final case class MessageChatDeleteMember(userId: Int) extends MessageContent
 
-private[api] object MessageChatDeleteMember {
-  def fromJava(o: TdApi.MessageChatDeleteMember): MessageChatDeleteMember = MessageChatDeleteMember(o.userId)
+object MessageChatDeleteMember {
+  private[api] def fromJava(o: TdApi.MessageChatDeleteMember): MessageChatDeleteMember =
+    MessageChatDeleteMember(o.userId)
 }
 
 /**
@@ -342,8 +346,8 @@ private[api] object MessageChatDeleteMember {
   */
 final case class MessageChatUpgradeTo(supergroupId: Int) extends MessageContent
 
-private[api] object MessageChatUpgradeTo {
-  def fromJava(o: TdApi.MessageChatUpgradeTo): MessageChatUpgradeTo = MessageChatUpgradeTo(o.supergroupId)
+object MessageChatUpgradeTo {
+  private[api] def fromJava(o: TdApi.MessageChatUpgradeTo): MessageChatUpgradeTo = MessageChatUpgradeTo(o.supergroupId)
 }
 
 /**
@@ -354,8 +358,8 @@ private[api] object MessageChatUpgradeTo {
   */
 final case class MessageChatUpgradeFrom(title: String, basicGroupId: Int) extends MessageContent
 
-private[api] object MessageChatUpgradeFrom {
-  def fromJava(o: TdApi.MessageChatUpgradeFrom): MessageChatUpgradeFrom =
+object MessageChatUpgradeFrom {
+  private[api] def fromJava(o: TdApi.MessageChatUpgradeFrom): MessageChatUpgradeFrom =
     MessageChatUpgradeFrom(o.title, o.basicGroupId)
 }
 
@@ -366,8 +370,8 @@ private[api] object MessageChatUpgradeFrom {
   */
 final case class MessagePinMessage(messageId: Long) extends MessageContent
 
-private[api] object MessagePinMessage {
-  def fromJava(o: TdApi.MessagePinMessage): MessagePinMessage = MessagePinMessage(o.messageId)
+object MessagePinMessage {
+  private[api] def fromJava(o: TdApi.MessagePinMessage): MessagePinMessage = MessagePinMessage(o.messageId)
 }
 
 /**
@@ -382,8 +386,8 @@ case object MessageScreenshotTaken extends MessageContent
   */
 final case class MessageChatSetTtl(ttl: Int) extends MessageContent
 
-private[api] object MessageChatSetTtl {
-  def fromJava(o: TdApi.MessageChatSetTtl): MessageChatSetTtl = MessageChatSetTtl(o.ttl)
+object MessageChatSetTtl {
+  private[api] def fromJava(o: TdApi.MessageChatSetTtl): MessageChatSetTtl = MessageChatSetTtl(o.ttl)
 }
 
 /**
@@ -393,8 +397,9 @@ private[api] object MessageChatSetTtl {
   */
 final case class MessageCustomServiceAction(text: String) extends MessageContent
 
-private[api] object MessageCustomServiceAction {
-  def fromJava(o: TdApi.MessageCustomServiceAction): MessageCustomServiceAction = MessageCustomServiceAction(o.text)
+object MessageCustomServiceAction {
+  private[api] def fromJava(o: TdApi.MessageCustomServiceAction): MessageCustomServiceAction =
+    MessageCustomServiceAction(o.text)
 }
 
 /**
@@ -406,8 +411,9 @@ private[api] object MessageCustomServiceAction {
   */
 final case class MessageGameScore(gameMessageId: Long, gameId: Long, score: Int) extends MessageContent
 
-private[api] object MessageGameScore {
-  def fromJava(o: TdApi.MessageGameScore): MessageGameScore = MessageGameScore(o.gameMessageId, o.gameId, o.score)
+object MessageGameScore {
+  private[api] def fromJava(o: TdApi.MessageGameScore): MessageGameScore =
+    MessageGameScore(o.gameMessageId, o.gameId, o.score)
 }
 
 /**
@@ -420,8 +426,8 @@ private[api] object MessageGameScore {
 final case class MessagePaymentSuccessful(invoiceMessageId: Long, currency: String, totalAmount: Long)
     extends MessageContent
 
-private[api] object MessagePaymentSuccessful {
-  def fromJava(o: TdApi.MessagePaymentSuccessful): MessagePaymentSuccessful =
+object MessagePaymentSuccessful {
+  private[api] def fromJava(o: TdApi.MessagePaymentSuccessful): MessagePaymentSuccessful =
     MessagePaymentSuccessful(o.invoiceMessageId, o.currency, o.totalAmount)
 }
 
@@ -448,8 +454,8 @@ final case class MessagePaymentSuccessfulBot(
   providerPaymentChargeId: String
 ) extends MessageContent
 
-private[api] object MessagePaymentSuccessfulBot {
-  def fromJava(o: TdApi.MessagePaymentSuccessfulBot): MessagePaymentSuccessfulBot =
+object MessagePaymentSuccessfulBot {
+  private[api] def fromJava(o: TdApi.MessagePaymentSuccessfulBot): MessagePaymentSuccessfulBot =
     MessagePaymentSuccessfulBot(
       o.invoiceMessageId,
       o.currency,
@@ -474,8 +480,9 @@ case object MessageContactRegistered extends MessageContent
   */
 final case class MessageWebsiteConnected(domainName: String) extends MessageContent
 
-private[api] object MessageWebsiteConnected {
-  def fromJava(o: TdApi.MessageWebsiteConnected): MessageWebsiteConnected = MessageWebsiteConnected(o.domainName)
+object MessageWebsiteConnected {
+  private[api] def fromJava(o: TdApi.MessageWebsiteConnected): MessageWebsiteConnected =
+    MessageWebsiteConnected(o.domainName)
 }
 
 /**
@@ -485,8 +492,8 @@ private[api] object MessageWebsiteConnected {
   */
 final case class MessagePassportDataSent(types: List[PassportElementType]) extends MessageContent
 
-private[api] object MessagePassportDataSent {
-  def fromJava(o: TdApi.MessagePassportDataSent): MessagePassportDataSent =
+object MessagePassportDataSent {
+  private[api] def fromJava(o: TdApi.MessagePassportDataSent): MessagePassportDataSent =
     MessagePassportDataSent(o.types.map(PassportElementType.fromJava).toList)
 }
 
@@ -501,8 +508,8 @@ final case class MessagePassportDataReceived(
   credentials: EncryptedCredentials
 ) extends MessageContent
 
-private[api] object MessagePassportDataReceived {
-  def fromJava(o: TdApi.MessagePassportDataReceived): MessagePassportDataReceived =
+object MessagePassportDataReceived {
+  private[api] def fromJava(o: TdApi.MessagePassportDataReceived): MessagePassportDataReceived =
     MessagePassportDataReceived(
       o.elements.map(EncryptedPassportElement.fromJava).toList,
       EncryptedCredentials.fromJava(o.credentials)
@@ -514,8 +521,8 @@ private[api] object MessagePassportDataReceived {
   */
 case object MessageUnsupported extends MessageContent
 
-private[api] object MessageContent {
-  def fromJava(o: TdApi.MessageContent): MessageContent = o.getConstructor match {
+object MessageContent {
+  private[api] def fromJava(o: TdApi.MessageContent): MessageContent = o.getConstructor match {
     case TdApi.MessageUnsupported.CONSTRUCTOR       => MessageUnsupported
     case TdApi.MessageExpiredPhoto.CONSTRUCTOR      => MessageExpiredPhoto
     case TdApi.MessageExpiredVideo.CONSTRUCTOR      => MessageExpiredVideo

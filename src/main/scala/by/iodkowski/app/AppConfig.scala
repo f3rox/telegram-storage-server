@@ -1,11 +1,11 @@
 package by.iodkowski.app
 
-import by.iodkowski.app.AppConfig.{HttpConfig, TdLibConfig}
+import by.iodkowski.app.AppConfig.{HttpConfig, TelegramConfig}
 import cats.effect.Sync
 import pureconfig.generic.semiauto._
 import pureconfig.{ConfigReader, ConfigSource}
 
-final case class AppConfig(http: HttpConfig, tdLib: TdLibConfig)
+final case class AppConfig(http: HttpConfig, telegram: TelegramConfig)
 
 object AppConfig {
 
@@ -14,7 +14,7 @@ object AppConfig {
     implicit val configReader: ConfigReader[HttpConfig] = deriveReader
   }
 
-  final case class TdLibConfig(
+  final case class TelegramConfig(
     apiId: Int,
     apiHash: String,
     databaseDirectory: String,
@@ -24,10 +24,11 @@ object AppConfig {
     deviceModel: String,
     systemVersion: String,
     applicationVersion: String,
-    enableStorageOptimizer: Boolean
+    enableStorageOptimizer: Boolean,
+    storageChatId: Long
   )
-  object TdLibConfig {
-    implicit val configReader: ConfigReader[TdLibConfig] = deriveReader
+  object TelegramConfig {
+    implicit val configReader: ConfigReader[TelegramConfig] = deriveReader
   }
 
   implicit val configReader: ConfigReader[AppConfig] = deriveReader

@@ -1,10 +1,10 @@
 package by.iodkowski.telegram.api.message
 
-import org.drinkless.tdlib.TdApi
 import by.iodkowski.telegram.api._
 import by.iodkowski.telegram.api.file.{InputFile, InputThumbnail}
 import by.iodkowski.telegram.api.poll.PollType
 import by.iodkowski.telegram.api.text.FormattedText
+import org.drinkless.tdlib.TdApi
 
 /**
   * The content of a message to send.
@@ -21,8 +21,8 @@ sealed abstract class InputMessageContent extends Product with Serializable
 final case class InputMessageText(text: FormattedText, disableWebPagePreview: Boolean, clearDraft: Boolean)
     extends InputMessageContent
 
-private[api] object InputMessageText {
-  def fromJava(o: TdApi.InputMessageText): InputMessageText =
+object InputMessageText {
+  private[api] def fromJava(o: TdApi.InputMessageText): InputMessageText =
     InputMessageText(FormattedText.fromJava(o.text), o.disableWebPagePreview, o.clearDraft)
 }
 
@@ -45,8 +45,8 @@ final case class InputMessageAnimation(
   caption: FormattedText
 ) extends InputMessageContent
 
-private[api] object InputMessageAnimation {
-  def fromJava(o: TdApi.InputMessageAnimation): InputMessageAnimation =
+object InputMessageAnimation {
+  private[api] def fromJava(o: TdApi.InputMessageAnimation): InputMessageAnimation =
     InputMessageAnimation(
       InputFile.fromJava(o.animation),
       Option(o.thumbnail).map(InputThumbnail.fromJava),
@@ -76,8 +76,8 @@ final case class InputMessageAudio(
   caption: FormattedText
 ) extends InputMessageContent
 
-private[api] object InputMessageAudio {
-  def fromJava(o: TdApi.InputMessageAudio): InputMessageAudio =
+object InputMessageAudio {
+  private[api] def fromJava(o: TdApi.InputMessageAudio): InputMessageAudio =
     InputMessageAudio(
       InputFile.fromJava(o.audio),
       Option(o.albumCoverThumbnail).map(InputThumbnail.fromJava),
@@ -101,8 +101,8 @@ final case class InputMessageDocument(
   caption: FormattedText
 ) extends InputMessageContent
 
-private[api] object InputMessageDocument {
-  def fromJava(o: TdApi.InputMessageDocument): InputMessageDocument =
+object InputMessageDocument {
+  private[api] def fromJava(o: TdApi.InputMessageDocument): InputMessageDocument =
     InputMessageDocument(
       InputFile.fromJava(o.document),
       Option(o.thumbnail).map(InputThumbnail.fromJava),
@@ -131,8 +131,8 @@ final case class InputMessagePhoto(
   ttl: Int
 ) extends InputMessageContent
 
-private[api] object InputMessagePhoto {
-  def fromJava(o: TdApi.InputMessagePhoto): InputMessagePhoto =
+object InputMessagePhoto {
+  private[api] def fromJava(o: TdApi.InputMessagePhoto): InputMessagePhoto =
     InputMessagePhoto(
       InputFile.fromJava(o.photo),
       InputThumbnail.fromJava(o.thumbnail),
@@ -159,8 +159,8 @@ final case class InputMessageSticker(
   height: Int
 ) extends InputMessageContent
 
-private[api] object InputMessageSticker {
-  def fromJava(o: TdApi.InputMessageSticker): InputMessageSticker =
+object InputMessageSticker {
+  private[api] def fromJava(o: TdApi.InputMessageSticker): InputMessageSticker =
     InputMessageSticker(
       InputFile.fromJava(o.sticker),
       Option(o.thumbnail).map(InputThumbnail.fromJava),
@@ -194,8 +194,8 @@ final case class InputMessageVideo(
   ttl: Int
 ) extends InputMessageContent
 
-private[api] object InputMessageVideo {
-  def fromJava(o: TdApi.InputMessageVideo): InputMessageVideo =
+object InputMessageVideo {
+  private[api] def fromJava(o: TdApi.InputMessageVideo): InputMessageVideo =
     InputMessageVideo(
       InputFile.fromJava(o.video),
       Option(o.thumbnail).map(InputThumbnail.fromJava),
@@ -224,8 +224,8 @@ final case class InputMessageVideoNote(
   length: Int
 ) extends InputMessageContent
 
-private[api] object InputMessageVideoNote {
-  def fromJava(o: TdApi.InputMessageVideoNote): InputMessageVideoNote =
+object InputMessageVideoNote {
+  private[api] def fromJava(o: TdApi.InputMessageVideoNote): InputMessageVideoNote =
     InputMessageVideoNote(
       InputFile.fromJava(o.videoNote),
       Option(o.thumbnail).map(InputThumbnail.fromJava),
@@ -249,8 +249,8 @@ final case class InputMessageVoiceNote(
   caption: FormattedText
 ) extends InputMessageContent
 
-private[api] object InputMessageVoiceNote {
-  def fromJava(o: TdApi.InputMessageVoiceNote): InputMessageVoiceNote =
+object InputMessageVoiceNote {
+  private[api] def fromJava(o: TdApi.InputMessageVoiceNote): InputMessageVoiceNote =
     InputMessageVoiceNote(
       InputFile.fromJava(o.voiceNote),
       o.duration,
@@ -267,8 +267,8 @@ private[api] object InputMessageVoiceNote {
   */
 final case class InputMessageLocation(location: Location, livePeriod: Int) extends InputMessageContent
 
-private[api] object InputMessageLocation {
-  def fromJava(o: TdApi.InputMessageLocation): InputMessageLocation =
+object InputMessageLocation {
+  private[api] def fromJava(o: TdApi.InputMessageLocation): InputMessageLocation =
     InputMessageLocation(Location.fromJava(o.location), o.livePeriod)
 }
 
@@ -279,8 +279,8 @@ private[api] object InputMessageLocation {
   */
 final case class InputMessageVenue(venue: Venue) extends InputMessageContent
 
-private[api] object InputMessageVenue {
-  def fromJava(o: TdApi.InputMessageVenue): InputMessageVenue = InputMessageVenue(Venue.fromJava(o.venue))
+object InputMessageVenue {
+  private[api] def fromJava(o: TdApi.InputMessageVenue): InputMessageVenue = InputMessageVenue(Venue.fromJava(o.venue))
 }
 
 /**
@@ -290,8 +290,9 @@ private[api] object InputMessageVenue {
   */
 final case class InputMessageContact(contact: Contact) extends InputMessageContent
 
-private[api] object InputMessageContact {
-  def fromJava(o: TdApi.InputMessageContact): InputMessageContact = InputMessageContact(Contact.fromJava(o.contact))
+object InputMessageContact {
+  private[api] def fromJava(o: TdApi.InputMessageContact): InputMessageContact =
+    InputMessageContact(Contact.fromJava(o.contact))
 }
 
 /**
@@ -302,8 +303,9 @@ private[api] object InputMessageContact {
   */
 final case class InputMessageGame(botUserId: Int, gameShortName: String) extends InputMessageContent
 
-private[api] object InputMessageGame {
-  def fromJava(o: TdApi.InputMessageGame): InputMessageGame = InputMessageGame(o.botUserId, o.gameShortName)
+object InputMessageGame {
+  private[api] def fromJava(o: TdApi.InputMessageGame): InputMessageGame =
+    InputMessageGame(o.botUserId, o.gameShortName)
 }
 
 /**
@@ -335,8 +337,8 @@ final case class InputMessageInvoice(
   startParameter: String
 ) extends InputMessageContent
 
-private[api] object InputMessageInvoice {
-  def fromJava(o: TdApi.InputMessageInvoice): InputMessageInvoice =
+object InputMessageInvoice {
+  private[api] def fromJava(o: TdApi.InputMessageInvoice): InputMessageInvoice =
     InputMessageInvoice(
       Invoice.fromJava(o.invoice),
       o.title,
@@ -369,8 +371,8 @@ final case class InputMessagePoll(
   isClosed: Boolean
 ) extends InputMessageContent
 
-private[api] object InputMessagePoll {
-  def fromJava(o: TdApi.InputMessagePoll): InputMessagePoll =
+object InputMessagePoll {
+  private[api] def fromJava(o: TdApi.InputMessagePoll): InputMessagePoll =
     InputMessagePoll(o.question, o.options.toList, o.isAnonymous, PollType.fromJava(o.`type`), o.isClosed)
 }
 
@@ -391,37 +393,38 @@ final case class InputMessageForwarded(
   removeCaption: Boolean
 ) extends InputMessageContent
 
-private[api] object InputMessageForwarded {
-  def fromJava(o: TdApi.InputMessageForwarded): InputMessageForwarded =
+object InputMessageForwarded {
+  private[api] def fromJava(o: TdApi.InputMessageForwarded): InputMessageForwarded =
     InputMessageForwarded(o.fromChatId, o.messageId, o.inGameShare, o.sendCopy, o.removeCaption)
 }
 
-private[api] object InputMessageContent {
-  def fromJava(o: TdApi.InputMessageContent): InputMessageContent = o.getConstructor match {
-    case TdApi.InputMessageText.CONSTRUCTOR  => InputMessageText.fromJava(o.asInstanceOf[TdApi.InputMessageText])
-    case TdApi.InputMessageAudio.CONSTRUCTOR => InputMessageAudio.fromJava(o.asInstanceOf[TdApi.InputMessageAudio])
-    case TdApi.InputMessagePhoto.CONSTRUCTOR => InputMessagePhoto.fromJava(o.asInstanceOf[TdApi.InputMessagePhoto])
-    case TdApi.InputMessageVideo.CONSTRUCTOR => InputMessageVideo.fromJava(o.asInstanceOf[TdApi.InputMessageVideo])
-    case TdApi.InputMessageVenue.CONSTRUCTOR => InputMessageVenue.fromJava(o.asInstanceOf[TdApi.InputMessageVenue])
-    case TdApi.InputMessageGame.CONSTRUCTOR  => InputMessageGame.fromJava(o.asInstanceOf[TdApi.InputMessageGame])
-    case TdApi.InputMessagePoll.CONSTRUCTOR  => InputMessagePoll.fromJava(o.asInstanceOf[TdApi.InputMessagePoll])
-    case TdApi.InputMessageAnimation.CONSTRUCTOR =>
-      InputMessageAnimation.fromJava(o.asInstanceOf[TdApi.InputMessageAnimation])
-    case TdApi.InputMessageDocument.CONSTRUCTOR =>
-      InputMessageDocument.fromJava(o.asInstanceOf[TdApi.InputMessageDocument])
-    case TdApi.InputMessageSticker.CONSTRUCTOR =>
-      InputMessageSticker.fromJava(o.asInstanceOf[TdApi.InputMessageSticker])
-    case TdApi.InputMessageVideoNote.CONSTRUCTOR =>
-      InputMessageVideoNote.fromJava(o.asInstanceOf[TdApi.InputMessageVideoNote])
-    case TdApi.InputMessageVoiceNote.CONSTRUCTOR =>
-      InputMessageVoiceNote.fromJava(o.asInstanceOf[TdApi.InputMessageVoiceNote])
-    case TdApi.InputMessageLocation.CONSTRUCTOR =>
-      InputMessageLocation.fromJava(o.asInstanceOf[TdApi.InputMessageLocation])
-    case TdApi.InputMessageContact.CONSTRUCTOR =>
-      InputMessageContact.fromJava(o.asInstanceOf[TdApi.InputMessageContact])
-    case TdApi.InputMessageInvoice.CONSTRUCTOR =>
-      InputMessageInvoice.fromJava(o.asInstanceOf[TdApi.InputMessageInvoice])
-    case TdApi.InputMessageForwarded.CONSTRUCTOR =>
-      InputMessageForwarded.fromJava(o.asInstanceOf[TdApi.InputMessageForwarded])
-  }
+object InputMessageContent {
+  private[api] def fromJava(o: TdApi.InputMessageContent): InputMessageContent =
+    o.getConstructor match {
+      case TdApi.InputMessageText.CONSTRUCTOR  => InputMessageText.fromJava(o.asInstanceOf[TdApi.InputMessageText])
+      case TdApi.InputMessageAudio.CONSTRUCTOR => InputMessageAudio.fromJava(o.asInstanceOf[TdApi.InputMessageAudio])
+      case TdApi.InputMessagePhoto.CONSTRUCTOR => InputMessagePhoto.fromJava(o.asInstanceOf[TdApi.InputMessagePhoto])
+      case TdApi.InputMessageVideo.CONSTRUCTOR => InputMessageVideo.fromJava(o.asInstanceOf[TdApi.InputMessageVideo])
+      case TdApi.InputMessageVenue.CONSTRUCTOR => InputMessageVenue.fromJava(o.asInstanceOf[TdApi.InputMessageVenue])
+      case TdApi.InputMessageGame.CONSTRUCTOR  => InputMessageGame.fromJava(o.asInstanceOf[TdApi.InputMessageGame])
+      case TdApi.InputMessagePoll.CONSTRUCTOR  => InputMessagePoll.fromJava(o.asInstanceOf[TdApi.InputMessagePoll])
+      case TdApi.InputMessageAnimation.CONSTRUCTOR =>
+        InputMessageAnimation.fromJava(o.asInstanceOf[TdApi.InputMessageAnimation])
+      case TdApi.InputMessageDocument.CONSTRUCTOR =>
+        InputMessageDocument.fromJava(o.asInstanceOf[TdApi.InputMessageDocument])
+      case TdApi.InputMessageSticker.CONSTRUCTOR =>
+        InputMessageSticker.fromJava(o.asInstanceOf[TdApi.InputMessageSticker])
+      case TdApi.InputMessageVideoNote.CONSTRUCTOR =>
+        InputMessageVideoNote.fromJava(o.asInstanceOf[TdApi.InputMessageVideoNote])
+      case TdApi.InputMessageVoiceNote.CONSTRUCTOR =>
+        InputMessageVoiceNote.fromJava(o.asInstanceOf[TdApi.InputMessageVoiceNote])
+      case TdApi.InputMessageLocation.CONSTRUCTOR =>
+        InputMessageLocation.fromJava(o.asInstanceOf[TdApi.InputMessageLocation])
+      case TdApi.InputMessageContact.CONSTRUCTOR =>
+        InputMessageContact.fromJava(o.asInstanceOf[TdApi.InputMessageContact])
+      case TdApi.InputMessageInvoice.CONSTRUCTOR =>
+        InputMessageInvoice.fromJava(o.asInstanceOf[TdApi.InputMessageInvoice])
+      case TdApi.InputMessageForwarded.CONSTRUCTOR =>
+        InputMessageForwarded.fromJava(o.asInstanceOf[TdApi.InputMessageForwarded])
+    }
 }
