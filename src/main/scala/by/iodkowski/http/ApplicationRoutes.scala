@@ -12,8 +12,8 @@ object ApplicationRoutes {
 
   val V1: String = "v1"
 
-  def of[F[_]: Concurrent](helloService: HelloService[F], telegramService: TelegramService[F]): HttpRoutes[F] = {
-    val apiRoutes = HelloRoutes.of(helloService) <+> SocketRoutes.of(telegramService)
+  def of[F[_]: Concurrent](helloService: HelloService[F] /*, telegramService: TelegramService[F]*/ ): HttpRoutes[F] = {
+    val apiRoutes = HelloRoutes.of(helloService) // <+> SocketRoutes.of(telegramService)
     Router("/api" -> apiRoutes)
   }
 }

@@ -1,6 +1,6 @@
-package by.iodkowski.config
+package by.iodkowski.app
 
-import by.iodkowski.config.AppConfig.{HttpConfig, TdLibConfig}
+import by.iodkowski.app.AppConfig.{HttpConfig, TdLibConfig}
 import cats.effect.Sync
 import pureconfig.generic.semiauto._
 import pureconfig.{ConfigReader, ConfigSource}

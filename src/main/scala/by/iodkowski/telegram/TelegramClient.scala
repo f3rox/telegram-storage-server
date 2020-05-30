@@ -1,6 +1,6 @@
 package by.iodkowski.telegram
 
-import by.iodkowski.config.AppConfig.TdLibConfig
+import by.iodkowski.app.AppConfig.TdLibConfig
 import by.iodkowski.telegram.api._
 import by.iodkowski.telegram.api.auth._
 import cats.effect.{ConcurrentEffect, IO}
@@ -8,6 +8,8 @@ import cats.implicits._
 import fs2.concurrent._
 import fs2.{Pipe, Stream}
 import org.drinkless.tdlib.{Client, TdApi}
+
+import scala.io.StdIn
 
 trait TelegramClient[F[_]] {
   def updates: Stream[F, Update]
@@ -35,16 +37,22 @@ object TelegramClient {
       }
     } yield new TelegramClient[F] {
 
-      private def updatesPreprocessor: Pipe[F, Update, Update] = _.evalFilterNot {
-        case UpdateAuthorizationState(authorizationState) =>
-          authorizationState match {
-            case AuthorizationStateWaitTdlibParameters  => setTdLibParameters(tdLibConfig) as true
-            case _: AuthorizationStateWaitEncryptionKey => checkDatabaseEncryptionKey as true
-            case AuthorizationStateWaitPhoneNumber      => setAuthenticationPhoneNumber(phoneNumber) as true
-            case _                                      => false.pure[F]
+      private def updatesPreprocessor: Pipe[F, Update, Update] =
+        _.evalTap(upd => F.delay(println(upd)))
+          .evalTap {
+            case UpdateAuthorizationState(authorizationState) =>
+              authorizationState match {
+                case AuthorizationStateWaitTdlibParameters  => setTdLibParameters(tdLibConfig)
+                case _: AuthorizationStateWaitEncryptionKey => checkDatabaseEncryptionKey
+                case AuthorizationStateWaitPhoneNumber      => setAuthenticationPhoneNumber(phoneNumber)
+                case _: AuthorizationStateWaitCode =>
+                  F.delay(StdIn.readLine("Enter code: ")).flatMap(checkAuthenticationCode)
+                case _: AuthorizationStateWaitPassword =>
+                  F.delay(StdIn.readLine("Enter password: ")).flatMap(checkAuthenticationPassword)
+                case _ => F.unit
+              }
+            case _ => F.unit
           }
-        case _ => false.pure[F]
-      }
 
       private def resultHandler(result: TdApi.Object): Unit = println(result)
 

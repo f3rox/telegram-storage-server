@@ -1,6 +1,6 @@
 package by.iodkowski.telegram
 
-import by.iodkowski.config.AppConfig.TdLibConfig
+import by.iodkowski.app.AppConfig.TdLibConfig
 import cats.Parallel
 import cats.effect.{ConcurrentEffect, Resource, Timer}
 import com.evolutiongaming.scache.Cache
