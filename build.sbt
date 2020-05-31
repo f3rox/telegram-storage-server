@@ -10,11 +10,13 @@ lazy val root =
       libraryDependencies ++= Seq(
         Http4s.DSL,
         Http4s.Server,
-        PureConfig,
+        Http4s.Circe,
         Fs2.Core,
         Fs2.IO,
+        PureConfig,
         DerevoMagnolia,
         CirceParser,
+        CirceDerivation,
         Logback,
         Skunk
       )

@@ -6,7 +6,9 @@ import by.iodkowski.user.UserQueries._
 import by.iodkowski.utils.common._
 import cats.effect.{Resource, Sync}
 import cats.implicits._
-import skunk.Session
+import skunk.{Session, SqlState}
+
+import scala.util.control.NoStackTrace
 
 trait UserService[F[_]] {
   def create(username: String, password: String): F[UUID]
@@ -24,6 +26,10 @@ object UserService {
                 cmd
                   .execute(User(uuid, username, password))
                   .as(uuid)
+                  .handleErrorWith {
+                    case SqlState.UniqueViolation(_) =>
+                      UserNameInUse(username).raiseError[F, UUID]
+                  }
               }
             }
           }
@@ -37,4 +43,5 @@ object UserService {
           }
       }
     }
+  case class UserNameInUse(username: String) extends NoStackTrace
 }

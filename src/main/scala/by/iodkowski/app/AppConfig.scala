@@ -27,7 +27,7 @@ object AppConfig {
   )
   private implicit val telegramConfigReader: ConfigReader[TelegramConfig] = deriveReader
 
-  final case class DbConfig(host: String, port: Int, user: String, database: String, poolSize: Int)
+  final case class DbConfig(host: String, port: Int, user: String, password: String, database: String, poolSize: Int)
   private implicit val dbConfigReader: ConfigReader[DbConfig] = deriveReader
 
   private implicit val configReader: ConfigReader[AppConfig] = deriveReader
