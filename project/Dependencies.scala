@@ -18,4 +18,5 @@ object Dependencies {
   lazy val DerevoMagnolia = "org.manatki"           %% "derevo-circe-magnolia" % "0.11.3"
   lazy val CirceParser    = "io.circe"              %% "circe-parser"          % "0.13.0"
   lazy val Logback        = "ch.qos.logback"        % "logback-classic"        % "1.2.3"
+  lazy val Skunk          = "org.tpolecat"          %% "skunk-core"            % "0.0.9"
 }

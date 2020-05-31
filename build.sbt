@@ -15,6 +15,7 @@ lazy val root =
         Fs2.IO,
         DerevoMagnolia,
         CirceParser,
-        Logback
+        Logback,
+        Skunk
       )
     )

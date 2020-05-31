@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS users
+(
+  id UUID PRIMARY KEY,
+  username VARCHAR(30) UNIQUE NOT NULL,
+  password VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS files
+(
+  id VARCHAR NOT NULL,
+  user_id UUID NOT NULL,
+  PRIMARY KEY (id, user_id)
+);
