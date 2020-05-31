@@ -10,9 +10,9 @@ object UserQueries {
     sql"""
          SELECT id, username, password
          FROM users
-         WHERE username = $varchar
+         WHERE username = ${varchar(30)}
     """
-      .query(uuid ~ varchar ~ varchar)
+      .query(uuid ~ varchar(30) ~ varchar(30))
       .gmap[User]
 
   val insertUser: Command[User] =

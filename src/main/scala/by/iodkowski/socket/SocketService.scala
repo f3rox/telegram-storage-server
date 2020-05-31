@@ -42,10 +42,10 @@ object SocketService {
           case LogOut                  => telegram.logOut
         }
 
-        override def toClient: Stream[F, WebSocketFrame] =
+        def toClient: Stream[F, WebSocketFrame] =
           telegramUpdates.merge(serverResponses.dequeue).map(message => WebSocketFrame.fromJson(message.asJson))
 
-        override def fromClient: Pipe[F, WebSocketFrame, Unit] = _.evalMap {
+        def fromClient: Pipe[F, WebSocketFrame, Unit] = _.evalMap {
           case text: WebSocketFrame.Text =>
             println(text)
             decode[ClientMessage](text.str)

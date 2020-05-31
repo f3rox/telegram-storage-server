@@ -5,7 +5,8 @@ import java.util.UUID
 
 import by.iodkowski.telegram.TelegramClient
 import by.iodkowski.telegram.api.{Update, UpdateFile}
-import by.iodkowski.utils.common._
+import by.iodkowski.utils.Security
+import by.iodkowski.utils.file._
 import cats.effect.concurrent.Ref
 import cats.effect.{Blocker, ContextShift, Resource, Sync}
 import cats.implicits._
@@ -23,14 +24,15 @@ trait FileService[F[_]] {
 object FileService {
 
   def of[F[_]: Sync: ContextShift](
-    telegramClient: TelegramClient[F]
+    telegramClient: TelegramClient[F],
+    security: Security[F]
   ): Resource[F, FileService[F]] =
     for {
       blocker        <- Blocker[F]
       uploadingFiles <- Resource.liftF(Ref.of[F, HashMap[UUID, HashSet[Int]]](HashMap.empty))
     } yield new FileService[F] {
 
-      override def processFiles: Pipe[F, Update, Unit] =
+      def processFiles: Pipe[F, Update, Unit] =
         _.evalTap {
           case UpdateFile(file) =>
             Sync[F].delay(
@@ -66,9 +68,9 @@ object FileService {
           case _ => ().pure[F]
         }
 
-      override def upload(userId: UUID, part: Part[F]): F[Unit] =
+      def upload(userId: UUID, part: Part[F]): F[Unit] =
         Sync[F].defer(for {
-          tmpFileName <- part.filename.fold(randomUUID.map(uuid => s"$uuid.mp3"))(_.pure[F])
+          tmpFileName <- part.filename.fold(security.randomUUID.map(uuid => s"$uuid.mp3"))(_.pure[F])
           tmpFilePath = Paths.get(s"tmp/$tmpFileName")
           _           = println(tmpFilePath)
           _           <- writeToFile(part.body, tmpFilePath)

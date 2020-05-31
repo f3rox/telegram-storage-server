@@ -1,11 +1,13 @@
 package by.iodkowski.app
 
-import by.iodkowski.app.AppConfig.{DbConfig, HttpConfig, TelegramConfig}
+import by.iodkowski.app.AppConfig.{DbConfig, HttpConfig, SecurityConfig, TelegramConfig}
 import cats.effect.Sync
 import pureconfig.generic.semiauto._
 import pureconfig.{ConfigReader, ConfigSource}
 
-final case class AppConfig(http: HttpConfig, telegram: TelegramConfig, storageDb: DbConfig)
+import scala.concurrent.duration.FiniteDuration
+
+final case class AppConfig(http: HttpConfig, telegram: TelegramConfig, storageDb: DbConfig, security: SecurityConfig)
 
 object AppConfig {
 
@@ -29,6 +31,9 @@ object AppConfig {
 
   final case class DbConfig(host: String, port: Int, user: String, password: String, database: String, poolSize: Int)
   private implicit val dbConfigReader: ConfigReader[DbConfig] = deriveReader
+
+  final case class SecurityConfig(tokenExpiresIn: FiniteDuration, jwtSecretKey: String)
+  private implicit val securityConfigReader: ConfigReader[SecurityConfig] = deriveReader
 
   private implicit val configReader: ConfigReader[AppConfig] = deriveReader
 

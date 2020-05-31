@@ -23,4 +23,6 @@ object Dependencies {
   lazy val Skunk           = "org.tpolecat"          %% "skunk-core"                   % "0.0.9"
   lazy val CirceParser     = "io.circe"              %% "circe-parser"                 % "0.13.0"
   lazy val CirceDerivation = "io.circe"              %% "circe-derivation-annotations" % "0.13.0-M4"
+  lazy val JwtAuth         = "dev.profunktor"        %% "http4s-jwt-auth"              % "0.0.5"
+  lazy val Scache          = "com.evolutiongaming"   %% "scache"                       % "2.2.1"
 }

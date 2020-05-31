@@ -42,9 +42,9 @@ object TelegramClient {
             case _             => false.pure[F]
           }
 
-      override def updates: Stream[F, Update] = client.updates.through(updatesPreprocessor)
+      def updates: Stream[F, Update] = client.updates.through(updatesPreprocessor)
 
-      override def sendAudioFile(localPath: Path): F[Int] = F.defer {
+      def sendAudioFile(localPath: Path): F[Int] = F.defer {
         val inputMessageAudio = new TdApi.InputMessageAudio()
         val inputFile         = new TdApi.InputFileLocal(localPath.toString)
         inputMessageAudio.audio = inputFile

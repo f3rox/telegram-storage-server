@@ -3,7 +3,7 @@ package by.iodkowski.user
 import java.util.UUID
 
 import by.iodkowski.user.UserQueries._
-import by.iodkowski.utils.common._
+import by.iodkowski.utils.Security
 import cats.effect.{Resource, Sync}
 import cats.implicits._
 import skunk.{Session, SqlState}
@@ -16,13 +16,13 @@ trait UserService[F[_]] {
 }
 
 object UserService {
-  def of[F[_]: Sync](sessionPool: Resource[F, Session[F]]): F[UserService[F]] =
+  def of[F[_]: Sync](sessionPool: Resource[F, Session[F]], security: Security[F]): F[UserService[F]] =
     Sync[F].delay {
       new UserService[F] {
         def create(username: String, password: String): F[UUID] =
           sessionPool.use { session =>
             session.prepare(insertUser).use { cmd =>
-              randomUUID.flatMap { uuid =>
+              security.randomUUID.flatMap { uuid =>
                 cmd
                   .execute(User(uuid, username, password))
                   .as(uuid)
@@ -38,7 +38,7 @@ object UserService {
             session.prepare(selectUser).use { query =>
               query
                 .option(username)
-                .map(_.filter(_.password == password))
+                .map(_.filter(_.password == password)) // TODO: Replace by password hash
             }
           }
       }

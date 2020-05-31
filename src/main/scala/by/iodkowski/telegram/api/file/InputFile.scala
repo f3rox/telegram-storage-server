@@ -15,7 +15,7 @@ sealed abstract class InputFile extends Product with Serializable {
   * @param id Unique file identifier.
   */
 final case class InputFileId(id: Int) extends InputFile {
-  override private[api] def toJava: TdApi.InputFile = new TdApi.InputFileId(id)
+  private[api] def toJava: TdApi.InputFile = new TdApi.InputFileId(id)
 }
 
 object InputFileId {
@@ -28,7 +28,7 @@ object InputFileId {
   * @param id Remote file identifier.
   */
 final case class InputFileRemote(id: String) extends InputFile {
-  override private[api] def toJava: TdApi.InputFile = new TdApi.InputFileRemote(id)
+  private[api] def toJava: TdApi.InputFile = new TdApi.InputFileRemote(id)
 }
 
 object InputFileRemote {
@@ -41,7 +41,7 @@ object InputFileRemote {
   * @param path Local path to the file.
   */
 final case class InputFileLocal(path: String) extends InputFile {
-  override private[api] def toJava: TdApi.InputFile = new TdApi.InputFileLocal(path)
+  private[api] def toJava: TdApi.InputFile = new TdApi.InputFileLocal(path)
 }
 
 object InputFileLocal {
@@ -56,7 +56,7 @@ object InputFileLocal {
   * @param expectedSize Expected size of the generated file; 0 if unknown.
   */
 final case class InputFileGenerated(originalPath: String, conversion: String, expectedSize: Int) extends InputFile {
-  override private[api] def toJava: TdApi.InputFile =
+  private[api] def toJava: TdApi.InputFile =
     new TdApi.InputFileGenerated(originalPath, conversion, expectedSize)
 }
 

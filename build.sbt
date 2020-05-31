@@ -7,6 +7,7 @@ lazy val root =
       name := "telegram-storage-server",
       scalaVersion := "2.13.2",
       scalacOptions += "-Ymacro-annotations",
+      resolvers += Resolver.bintrayRepo("evolutiongaming", "maven"),
       libraryDependencies ++= Seq(
         Http4s.DSL,
         Http4s.Server,
@@ -18,6 +19,8 @@ lazy val root =
         CirceParser,
         CirceDerivation,
         Logback,
-        Skunk
+        Skunk,
+        JwtAuth,
+        Scache
       )
     )

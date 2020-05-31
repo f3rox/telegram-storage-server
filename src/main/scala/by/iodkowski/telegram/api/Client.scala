@@ -42,9 +42,9 @@ object Client {
 
       private def resultHandler(result: TdApi.Object): Unit = println(result)
 
-      override def updates: Stream[F, Update] = q.dequeue
+      def updates: Stream[F, Update] = q.dequeue
 
-      override def setTdLibParameters(parameters: TelegramConfig): F[Unit] = F.delay {
+      def setTdLibParameters(parameters: TelegramConfig): F[Unit] = F.delay {
         import parameters._
         val params = new TdApi.TdlibParameters()
         params.apiId                  = apiId
@@ -60,13 +60,13 @@ object Client {
         jClient.send(new TdApi.SetTdlibParameters(params), resultHandler)
       }
 
-      override def checkDatabaseEncryptionKey: F[Unit] =
+      def checkDatabaseEncryptionKey: F[Unit] =
         F.delay(jClient.send(new TdApi.CheckDatabaseEncryptionKey(), resultHandler))
 
-      override def checkAuthenticationCode(code: String): F[Unit] =
+      def checkAuthenticationCode(code: String): F[Unit] =
         F.delay(jClient.send(new TdApi.CheckAuthenticationCode(code), resultHandler))
 
-      override def setAuthenticationPhoneNumber(
+      def setAuthenticationPhoneNumber(
         phoneNumber: Long,
         settings: Option[PhoneNumberAuthenticationSettings]
       ): F[Unit] =
@@ -78,7 +78,7 @@ object Client {
             )
         )
 
-      override def requestQrCodeAuthentication(otherUserIds: List[Int]): F[Unit] =
+      def requestQrCodeAuthentication(otherUserIds: List[Int]): F[Unit] =
         F.delay(
           jClient
             .send(
@@ -87,15 +87,15 @@ object Client {
             )
         )
 
-      override def checkAuthenticationPassword(password: String): F[Unit] =
+      def checkAuthenticationPassword(password: String): F[Unit] =
         F.delay(jClient.send(new TdApi.CheckAuthenticationPassword(password), resultHandler))
 
-      override def logOut: F[Unit] = F.delay(jClient.send(new TdApi.LogOut(), resultHandler))
+      def logOut: F[Unit] = F.delay(jClient.send(new TdApi.LogOut(), resultHandler))
 
-      override def uploadFile(file: InputFile, fileType: TdApi.FileType, priority: Int): F[Unit] =
+      def uploadFile(file: InputFile, fileType: TdApi.FileType, priority: Int): F[Unit] =
         F.delay(jClient.send(new TdApi.UploadFile(file.toJava, fileType, priority), resultHandler))
 
-      override def sendMessage(chatId: Long, inputMessageContent: TdApi.InputMessageContent): F[Message] =
+      def sendMessage(chatId: Long, inputMessageContent: TdApi.InputMessageContent): F[Message] =
         for {
           _ <- F.delay {
             val getChats = new TdApi.GetChats()
