@@ -2,6 +2,7 @@ package by.iodkowski.auth
 
 import java.util.UUID
 
+import by.iodkowski.auth.AuthService.InvalidUsernameOrPassword
 import by.iodkowski.http.ApplicationRoutes.V1
 import cats.effect.Sync
 import cats.implicits._
@@ -19,7 +20,12 @@ object AuthRoutes {
     HttpRoutes.of[F] {
       case req @ POST -> Root / V1 / "login" =>
         req.decode[LoginUser] { user =>
-          authService.login(user.username, user.password).flatMap(token => Ok().map(_.addCookie("token", token.value)))
+          authService
+            .login(user.username, user.password)
+            .flatMap(token => Ok().map(_.addCookie("token", token.value)))
+            .recoverWith {
+              case InvalidUsernameOrPassword => BadRequest("Invalid username or password")
+            }
         }
     } <+>
       authMiddleware {
@@ -28,7 +34,8 @@ object AuthRoutes {
             req.req.cookies
               .find(_.name == "token")
               .map(value => JwtToken(value.content))
-              .traverse_(authService.logout) *> Ok()
+              .traverse_(authService.logout) *>
+              Ok().map(_.removeCookie("token"))
         }
       }
   }

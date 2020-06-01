@@ -1,6 +1,7 @@
 package by.iodkowski.auth
 import java.util.UUID
 
+import by.iodkowski.auth.JwtAuthMiddleware.JwtUser
 import by.iodkowski.user.UserService
 import by.iodkowski.utils.Security
 import cats.Parallel
@@ -8,6 +9,7 @@ import cats.effect.{Concurrent, Resource, Timer}
 import cats.implicits._
 import com.evolutiongaming.scache.Cache
 import dev.profunktor.auth.jwt.JwtToken
+import io.circe.parser._
 import pdi.jwt.JwtClaim
 
 import scala.concurrent.duration._
@@ -38,7 +40,15 @@ object AuthService {
           }
         def logout(token: JwtToken): F[Unit] = tokens.remove(token).void
         def auth(token: JwtToken)(claim: JwtClaim): F[Option[UUID]] =
-          tokens.get(token).map(_.flatMap(id => security.parseUUID(claim.content).filter(_ == id)))
+          tokens
+            .get(token)
+            .map(
+              _.flatMap(userId =>
+                decode[JwtUser](claim.content).toOption
+                  .map(_.id)
+                  .filter(_ == userId)
+              )
+            )
       }
     }
 

@@ -4,9 +4,11 @@ import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 import by.iodkowski.app.AppConfig.SecurityConfig
+import by.iodkowski.auth.JwtAuthMiddleware.JwtUser
 import cats.effect.{Clock, Sync}
 import cats.implicits._
 import dev.profunktor.auth.jwt._
+import io.circe.syntax._
 import pdi.jwt.{JwtAlgorithm, JwtClaim}
 
 import scala.util.Try
@@ -27,7 +29,8 @@ object Security {
         for {
           issuedAt  <- Clock[F].realTime(TimeUnit.SECONDS)
           expiresAt = issuedAt + config.tokenExpiresIn.toSeconds
-          claim     = JwtClaim(userId.toString).issuedAt(issuedAt).expiresAt(expiresAt)
+          jwtUser   = JwtUser(userId).asJson.noSpaces
+          claim     = JwtClaim(jwtUser).issuedAt(issuedAt).expiresAt(expiresAt)
           secretKey = JwtSecretKey(config.jwtSecretKey)
           token     <- jwtEncode[F](claim, secretKey, JwtAlgorithm.HS256)
         } yield token
