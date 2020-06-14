@@ -18,7 +18,7 @@ object UserQueries {
   val insertUser: Command[User] =
     sql"""
          INSERT INTO users
-         VALUES ($uuid, $varchar, $varchar)
+         VALUES ($uuid, ${varchar(30)}, ${varchar(30)})
     """
       .command
       .gcontramap[User]

@@ -20,7 +20,7 @@ object Dependencies {
   lazy val PureConfig      = "com.github.pureconfig" %% "pureconfig"                   % "0.12.3"
   lazy val DerevoMagnolia  = "org.manatki"           %% "derevo-circe-magnolia"        % "0.11.3"
   lazy val Logback         = "ch.qos.logback"        % "logback-classic"               % "1.2.3"
-  lazy val Skunk           = "org.tpolecat"          %% "skunk-core"                   % "0.0.9"
+  lazy val Skunk           = "org.tpolecat"          %% "skunk-core"                   % "0.0.10"
   lazy val CirceParser     = "io.circe"              %% "circe-parser"                 % "0.13.0"
   lazy val CirceDerivation = "io.circe"              %% "circe-derivation-annotations" % "0.13.0-M4"
   lazy val JwtAuth         = "dev.profunktor"        %% "http4s-jwt-auth"              % "0.0.5"

@@ -43,5 +43,5 @@ object UserService {
           }
       }
     }
-  case class UserNameInUse(username: String) extends NoStackTrace
+  final case class UserNameInUse(username: String) extends NoStackTrace
 }
