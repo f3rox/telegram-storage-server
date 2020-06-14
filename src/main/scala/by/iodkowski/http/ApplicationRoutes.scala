@@ -34,11 +34,13 @@ object ApplicationRoutes {
           authService.auth,
           onError = Forbidden(_)
         )
+
     val apiRoutes =
       HelloRoutes.of(helloService) <+>
-//        authMiddleware(FileRoutes.of(fileService)) <+>
         UserRoutes.of(userService) <+>
+        FileRoutes.of(fileService, authMiddleware) <+>
         AuthRoutes.of(authService, authMiddleware)
+
     Router("/api" -> apiRoutes)
   }
 }

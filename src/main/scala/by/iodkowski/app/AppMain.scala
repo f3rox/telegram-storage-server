@@ -38,7 +38,7 @@ object AppMain extends IOApp {
       case (httpConfig, routes, telegramClient, fileService) =>
         HttpServer
           .stream(httpConfig, routes)
-          // .merge(telegramClient.updates.through(fileService.processFiles))
+          .merge(telegramClient.updates.through(fileService.processFiles))
           .compile
           .drain as ExitCode.Success
     }
