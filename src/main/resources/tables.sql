@@ -2,12 +2,31 @@ CREATE TABLE IF NOT EXISTS users
 (
   id UUID PRIMARY KEY,
   username VARCHAR(30) UNIQUE NOT NULL,
-  password VARCHAR(30) NOT NULL
+  password VARCHAR(30) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS files
 (
-  id VARCHAR NOT NULL,
+  id VARCHAR(50) NOT NULL,
   user_id UUID NOT NULL,
+  filename VARCHAR(70) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id, user_id)
+);
+
+CREATE TABLE IF NOT EXISTS playlists
+(
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL,
+  title VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS playlists_files
+(
+  playlist_id UUID NOT NULL,
+  file_id VARCHAR(50) NOT NULL,
+  index INT,
+  PRIMARY KEY (playlist_id, file_id)
 );
