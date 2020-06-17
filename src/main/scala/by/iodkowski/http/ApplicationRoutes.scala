@@ -13,6 +13,7 @@ import cats.implicits._
 import org.http4s.HttpRoutes
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
+import org.http4s.server.middleware._
 
 object ApplicationRoutes {
 
@@ -41,6 +42,6 @@ object ApplicationRoutes {
         FileRoutes.of(fileService, authMiddleware) <+>
         AuthRoutes.of(authService, authMiddleware)
 
-    Router("/api" -> apiRoutes)
+    Router("/api" -> Logger.httpRoutes(logHeaders = true, logBody = true)(CORS(apiRoutes)))
   }
 }
